@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Slab:ital,wght@0,100..700;1,100..700&display=swap');
+
+body {
+    background-color: rgba(170, 182, 178, 1);
+    font-family: 'Josefin Slab', serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.TypeRaijin {
+    margin-top: 100px;
+    box-sizing: border-box;
+    padding: 0px 30px 10px 30px;
+    font-size: 4em;
+    text-align: center;
+    border-bottom: 1px solid black;
+    letter-spacing: 0.2em;
+}
+
+.UserName {
+    font-size: 1.2 em;
+    display: flex;
+    font-weight: 600;
+    justify-content: center;
+    margin-top: 4em;
+}
+
+.Enter {
+    padding: 16px 30px 16px 30px;
+    box-sizing: border-box;
+    background-color: rgba(217, 217, 217, 1);
+    border-top-left-radius: 30em;
+    border-bottom-left-radius: 30em;
+}
+
+.UserName input {
+    border: none;
+    font-family: 'Josefin Slab', serif;
+    padding-left: 3em;
+    padding-right: 3em;
+    border-top-right-radius: 30em;
+    border-bottom-right-radius: 30em;
+    border-left: 2px solid rgba(170, 182, 178, 1);
+    background-color: rgba(217, 217, 217, 1);
+}
+
+.UserName input:focus {
+    outline: none;
+}
+
+.Play {
+    all: unset;
+    margin-top: 2em;
+    background-color: rgba(217, 217, 217, 1);
+    font-size: 2em;
+    font-weight: 500;
+    box-sizing: border-box;
+    font-family: 'Josefin Slab', serif;
+    border-radius: 5em;
+    padding: 26px 70px 20px 70px;
+    letter-spacing: 0.2em;
+    box-shadow: 0px 2px 7px rgba(53, 53, 53, 0.311);
+}
+
+.ButtHolder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Setting {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    font-size: 0.7em;
+    transform: translate(-50%);
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: rgba(217, 217, 217, 1);
+    padding: 15px 20px 5px 27px;
+    letter-spacing: .7em;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    box-shadow: 0px 2px 7px rgba(53, 53, 53, 0.311);
+}

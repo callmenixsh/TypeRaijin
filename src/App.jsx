@@ -1,14 +1,12 @@
 import { useState } from 'react'
 import './App.css'
-import Homescreen from './Component/Home.jsx'
+import HomeScreen from './Component/HomePage/HomeScreen.jsx'
 
 function App() {
 
   return (
     <>
-    <Homescreen/>
-    <h1>TypeRaijin HUAAHHAA</h1>
-
+    <HomeScreen/>
     </>
   )
 }
