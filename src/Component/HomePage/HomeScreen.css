@@ -6,10 +6,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 80vh;
 }
 
 .TypeRaijin {
-    margin-top: 100px;
     box-sizing: border-box;
     padding: 0px 30px 10px 30px;
     font-size: 4em;
