@@ -7,6 +7,8 @@ function App() {
   return (
     <>
     <Homescreen/>
+    <h1>TypeRaijin HUAAHHAA</h1>
+
     </>
   )
 }
