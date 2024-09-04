@@ -5,6 +5,8 @@ function App() {
 
   return (
     <>
+    <h1>TypeRaijin HUAAHHAA</h1>
+
     </>
   )
 }
