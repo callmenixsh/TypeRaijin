@@ -10,7 +10,7 @@ import QuitConfirm from './Component/GameScreen/QuitConfirm.jsx'
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <QuitConfirm />,
+    element: <HomeScreen />,
     errorElement: <div>404 Not Found</div>
   },
   {
