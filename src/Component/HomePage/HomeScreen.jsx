@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import './HomeScreen.css'
 import { useNavigate } from 'react-router-dom';
+import Settings from '../GameScreen/Settings';
 
 export const HomeScreen = () => {
   const navigate = useNavigate();
@@ -24,7 +25,8 @@ export const HomeScreen = () => {
         <div className='ButtHolder'>
           <button className='Play' onClick={handlePlayClick}>PLAY</button>
         </div>
-        <div className='Setting'>SETTINGS</div>
+        <Settings />
+
       </div>
     </>
   )

@@ -15,7 +15,7 @@
 	height: 70vh;
 	background: #e4e2e2;
 	border-radius: 7px;
-    align-items: center;
+	align-items: center;
 }
 
 .tabList {
@@ -25,24 +25,24 @@
 	align-items: center;
 	justify-content: space-around;
 	margin: 100px 5px;
-    padding: 30px 5px;
+	padding: 30px 5px;
 	padding-right: 5px;
 	border-right: rgb(143, 169, 160) 2px solid;
 }
 
 .titleBar {
 	flex: 1;
-    padding-bottom: 20px;
+	padding-bottom: 20px;
 }
 
 .timer {
 	padding: 15px 40px;
-    display: flex;
-    font-size: 2em;
+	display: flex;
+	font-size: 2em;
 	background: #dbdbdb;
 	box-shadow: 0px 0px 3.5px rgba(0, 0, 0, 0.25);
 	border-radius: 40px;
-    letter-spacing: .2em;
+	letter-spacing: .2em;
 	flex: 0.3;
 }
 
@@ -88,32 +88,36 @@
 	background: rgba(247, 247, 247, 0.35);
 	border-radius: 14.1128px 10px 50px 14.11px;
 }
+
 .player1 {
 	border: 2px solid rgba(198, 161, 27, 0.4);
 }
+
 .player2 {
 	border: 1.5px solid rgba(202, 62, 62, 0.4);
 }
+
 .player3 {
 	border: 1.2px solid rgba(99, 38, 115, 0.4);
 }
+
 .player4 {
 	border: 1.2px solid rgba(0, 126, 63, 0.4);
 }
 
 .wordPanel {
 	flex: 5;
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    margin: 30px;
-    height: 70%;
-    letter-spacing: 1.5em;
+	display: flex;
+	align-items: center;
+	padding: 10px;
+	margin: 30px;
+	height: 70%;
+	letter-spacing: 1.5em;
 }
 
 .typingPanel {
-    
-    font-family: 'Josefin Slab', serif;
+
+	font-family: 'Josefin Slab', serif;
 	margin-top: 30px;
 	padding: 20px 10px;
 	font-size: 2em;
@@ -123,12 +127,12 @@
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	border-radius: 10px;
 	text-align: center;
-    border: none;
-    text-transform: uppercase;
+	border: none;
+	text-transform: uppercase;
 }
 
-.typingPanel{
-    outline:none;
+.typingPanel {
+	outline: none;
 }
 
 .menuBar {
