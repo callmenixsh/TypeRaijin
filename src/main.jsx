@@ -5,11 +5,12 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
 import HomeScreen from './Component/HomePage/HomeScreen.jsx'
 import GameScreen from './Component/GameScreen/GameScreen.jsx'
+import QuitConfirm from './Component/GameScreen/QuitConfirm.jsx'
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <HomeScreen />,
+    element: <QuitConfirm />,
     errorElement: <div>404 Not Found</div>
   },
   {

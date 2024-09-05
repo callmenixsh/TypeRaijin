@@ -12,7 +12,6 @@ const useNavigation = () => {
         // Example: navigate to a quit confirmation page or perform some logout action
     };
 
-    // Return all navigation functions for use in components
     return { goToHome, goToGameScreen, goToSettings, handleQuit };
 };
 

@@ -61,6 +61,7 @@ body {
     padding: 26px 70px 20px 70px;
     letter-spacing: 0.2em;
     box-shadow: 0px 2px 7px rgba(53, 53, 53, 0.311);
+    cursor: pointer;
 }
 
 .ButtHolder {
@@ -86,4 +87,5 @@ body {
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
     box-shadow: 0px 2px 7px rgba(53, 53, 53, 0.311);
+    cursor: pointer;
 }

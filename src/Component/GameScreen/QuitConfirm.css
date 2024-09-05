@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Slab:ital,wght@0,100..700;1,100..700&display=swap');
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    /* Adds blur effect */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    font-weight: 100;
+    color: whitesmoke;
+    background: none;
+    text-align: center;
+    width: 100%;
+    max-width: 700px;
+    border-bottom: 1px solid whitesmoke;
+    letter-spacing: 7px;
+}
+
+.modal p {
+    font-size: 2.2em;
+    margin: 0;
+    margin-bottom: 24px;
+    font-weight: 200;
+}
+
+.buttonGroup {
+    margin-top: 40px;
+    display: flex;
+    gap: 16em;
+    justify-content: center;
+}
+
+.confirmButton,
+.cancelButton {
+    letter-spacing: 7px;
+    font-family: 'Josefin Slab', serif;
+    border: none;
+    padding: 12px 24px;
+    color: #ffffff;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 2em;
+    font-weight: 200;
+    transition: background-color 0.3s, transform 0.2s;
+    background: none;
+}
+
+
+.confirmButton:hover,
+.cancelButton:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+}
+
+.confirmButton:active,
+.cancelButton:active {
+    transform: scale(0.95);
+}
