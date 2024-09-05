@@ -70,22 +70,3 @@ body {
     align-items: center;
 }
 
-.Setting {
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    font-size: 0.7em;
-    transform: translate(-50%);
-    font-weight: 700;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background-color: rgba(217, 217, 217, 1);
-    padding: 15px 20px 5px 27px;
-    letter-spacing: .7em;
-    border-top-left-radius: 30px;
-    border-top-right-radius: 30px;
-    box-shadow: 0px 2px 7px rgba(53, 53, 53, 0.311);
-    cursor: pointer;
-}

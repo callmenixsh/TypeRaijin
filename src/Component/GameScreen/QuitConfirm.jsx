@@ -1,8 +1,19 @@
-// QuitConfirmation.jsx
 import React from 'react';
-import './QuitConfirm.css'; // Add styles for the overlay and modal
+import './QuitConfirm.css';
+import { useNavigate } from 'react-router-dom';
 
-const QuitConfirm = ({ onConfirm, onCancel }) => {
+const QuitConfirm = () => {
+
+    const navigate = useNavigate();
+    const onConfirm = () => {
+        navigate('/');
+      };
+
+      const onCancel = () => {
+        navigate('/gamescreen');
+      };
+
+
     return (
         <div className="overlay">
             <div className="modal">

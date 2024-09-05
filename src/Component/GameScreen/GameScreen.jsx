@@ -1,7 +1,8 @@
 import React from 'react'
 import './GameScreen.css'
 import Settings from './Settings'
-
+import Quits from './Quit'
+import '../../App.css';
 
 const GameScreen = () => {
     return (
@@ -30,8 +31,8 @@ const GameScreen = () => {
                 <input className="typingPanel" spellcheck="false" maxlength="10" />
 
                 <div className="menuBar">
-                    <Settings />
-                    <div className="quitR">QUIT</div>
+                    <Settings/>
+                    <Quits/>
                 </div>
             </div>
         </div>

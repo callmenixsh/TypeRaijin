@@ -1,3 +1,33 @@
-body{
-    background-color: black;
+.menuBar {
+	gap: 20px;
+	position: fixed;
+	bottom: 0;
+	left: 50%;
+	font-size: 0.7em;
+	transform: translate(-50%);
+	font-weight: 700;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	background-color: rgba(217, 217, 217, 1);
+	padding: 15px 20px 5px 27px;
+	letter-spacing: 0.3em;
+	border-top-left-radius: 30px;
+	border-top-right-radius: 30px;
+	box-shadow: 0px 2px 7px rgba(53, 53, 53, 0.311);
+}
+
+.menuBar .settings {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.menuBar .quits {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
 }

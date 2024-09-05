@@ -2,6 +2,7 @@
 
 
 .boddy {
+	margin-top: 90px;
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
@@ -9,7 +10,6 @@
 }
 
 .gameUI {
-	margin-top: 30px;
 	display: flex;
 	width: 95vw;
 	height: 70vh;
@@ -28,6 +28,8 @@
 	padding: 30px 5px;
 	padding-right: 5px;
 	border-right: rgb(143, 169, 160) 2px solid;
+	box-sizing: border-box;
+	height: 90%;
 }
 
 .titleBar {
@@ -135,22 +137,3 @@
 	outline: none;
 }
 
-.menuBar {
-	gap: 20px;
-	position: fixed;
-	bottom: 0;
-	left: 50%;
-	font-size: 0.7em;
-	transform: translate(-50%);
-	font-weight: 700;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
-	background-color: rgba(217, 217, 217, 1);
-	padding: 15px 20px 5px 27px;
-	letter-spacing: 0.3em;
-	border-top-left-radius: 30px;
-	border-top-right-radius: 30px;
-	box-shadow: 0px 2px 7px rgba(53, 53, 53, 0.311);
-}

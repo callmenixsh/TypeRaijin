@@ -1,10 +1,9 @@
 import React from 'react'
-import './GameScreen.css'
-
+import '../../App.css';
 
 const Settings = () => {
     return (
-        <div className='Setting'>SETTINGS</div>
+        <div className='settings'>SETTINGS</div>
 
     )
 }
