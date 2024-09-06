@@ -6,6 +6,8 @@ import "./index.css";
 import HomeScreen from "./Component/HomePage/HomeScreen.jsx";
 import GameScreen from "./Component/GameScreen/GameScreen.jsx";
 import QuitConfirm from "./Component/GameScreen/QuitConfirm.jsx";
+import EditSettings from "./Component/GameScreen/EditSettings.jsx";
+
 
 const router = createBrowserRouter([
 	{
@@ -25,6 +27,10 @@ const router = createBrowserRouter([
 				<QuitConfirm />
 			</>
 		),
+	},
+	{
+		path: "/settings",
+		element: <EditSettings />,
 	},
 ]);
 
