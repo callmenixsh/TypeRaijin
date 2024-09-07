@@ -1,19 +1,19 @@
-
 .Play {
-    all: unset;
-    background-color: rgba(217, 217, 217, 1);
-    font-size: 2em;
-    font-weight: 500;
-    box-sizing: border-box;
-    font-family: 'Josefin Slab', serif;
-    border-radius: 5em;
-    padding: 26px 70px 20px 70px;
-    letter-spacing: 0.2em;
-    box-shadow: 0px 2px 7px rgba(53, 53, 53, 0.311);
-    cursor: pointer;
+	all: unset;
+	background-color: rgba(217, 217, 217, 1);
+	font-size: 2em;
+	font-weight: 500;
+	box-sizing: border-box;
+	font-family: 'Josefin Slab', serif;
+	border-radius: 5em;
+	padding: 26px 70px 20px 70px;
+	letter-spacing: 0.2em;
+	box-shadow: 0px 2px 7px rgba(53, 53, 53, 0.311);
+	cursor: pointer;
 }
 
 .menuBar {
+	z-index: 2001;
 	gap: 20px;
 	position: fixed;
 	bottom: 0;
@@ -26,26 +26,31 @@
 	align-items: center;
 	text-align: center;
 	background-color: rgba(217, 217, 217, 1);
-	padding: 15px 20px 5px 25px;
+	padding: 5px 15px 5px 20px;
 	letter-spacing: 0.3em;
 	border-top-left-radius: 30px;
 	border-top-right-radius: 30px;
 	box-shadow: 0px 2px 7px rgba(53, 53, 53, 0.311);
+	user-select: none;
+	cursor: pointer;
 }
 
-/* .menuBar .settings {
-    padding: 5px 10px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
+
+
+.menuBar .settings {
+	padding: 5px 10px;
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
 }
 
 .menuBar .quits {
-    padding: 5px 10px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-} */
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
+	padding: 7px;
+	/* background-color: red; */
+}
 
 
 .leaderBoard {
@@ -105,4 +110,26 @@
 
 .player4 {
 	border: 1.2px solid rgba(0, 126, 63, 0.4);
+}
+
+/* /back page button  */
+.prevPageButton {
+	display: flex;
+	margin-top: 20px;
+	filter: invert();
+	cursor: pointer;
+	height: 30px;
+	width: 30px;
+	transform: translate(20px, 6px);
+	opacity: 80%;
+	border-radius: 50%;
+	background-color: rgba(132, 132, 132, 0.735);
+	box-shadow: 0px 2px 7px rgba(209, 209, 209, 0.568);
+	user-select: none;
+}
+
+.playNback {
+	display: flex;
+	justify-content: left;
+	align-items: left;
 }

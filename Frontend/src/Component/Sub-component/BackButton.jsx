@@ -11,8 +11,8 @@ const BackButton = () => {
   };
 
   return (<>
-    <div  onClick={handleBack}>
-    <img src={backIcon} style={{ width: '30px',height: '20px' }} alt="Back Icon" />
+    <div onClick={handleBack}>
+      <img src={backIcon} className='prevPageButton' alt="Back Icon" />
 
     </div>
   </>

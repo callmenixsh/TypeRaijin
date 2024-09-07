@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Settings from "../Sub-component/Settings";
+// import Settings from "../Sub-component/Settings";
 import "./HomeScreen.css";
+import BackButton from "../Sub-component/BackButton";
 import Play from "../Sub-component/Playgame";
 
 export const JoinHomeScreen = () => {
@@ -20,12 +21,12 @@ export const JoinHomeScreen = () => {
 				<div className="gameStart">
 					<div className="joinID">
 						<div className="idLabel">JOIN ROOM : </div>
-						<input className="enteredGameID"/>
+						<input className="enteredGameID" />
 					</div>
-					<Play />
-				</div>
-				<div className="menuBar">
-					<Settings />
+					<div className="playNback">
+						<Play />
+						<BackButton />
+					</div>
 				</div>
 			</div>
 		</>

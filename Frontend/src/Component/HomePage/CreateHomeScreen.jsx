@@ -4,7 +4,7 @@ import Settings from "../Sub-component/Settings";
 import "./HomeScreen.css";
 import Play from "../Sub-component/Playgame";
 import RoomID from "./RoomID";
-import BackButton  from "../Sub-component/BackButton";
+import BackButton from "../Sub-component/BackButton";
 
 export const CreateHomeScreen = () => {
 	const navigate = useNavigate();
@@ -22,13 +22,13 @@ export const CreateHomeScreen = () => {
 				<div className="gameStart">
 					<RoomID />
 					<div className="playNback">
-					<Play />
-					<BackButton />
+						<Play />
+						<BackButton />
 					</div>
 				</div>
 
 				{/* <div className="menuBar"> */}
-					<Settings />
+				<Settings />
 				{/* </div> */}
 			</div>
 		</>

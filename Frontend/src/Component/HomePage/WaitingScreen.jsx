@@ -29,11 +29,11 @@ const WaitingScreen = () => {
                     </div>
                     <div className='roomNready'>
                         <RoomID />
-                        <button className="readyButton" onClick={handleReady}>Ready</button>
+                        <div className='playNback'>
+                            <button className="readyButton" onClick={handleReady}>Ready</button>
+                            <BackButton />
+                        </div>
                     </div>
-                </div>
-                <div className="menuBar">
-                    <BackButton/>
                 </div>
             </div>
         </>

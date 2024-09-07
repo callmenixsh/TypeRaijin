@@ -9,7 +9,7 @@ body {
     height: 80vh;
 }
 
-.homebody{
+.homebody {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -30,7 +30,6 @@ body {
     display: flex;
     font-weight: 600;
     justify-content: center;
-    margin-top: 4em;
 }
 
 .UserID input {
@@ -56,21 +55,23 @@ body {
     border-bottom-left-radius: 30em;
 }
 
-.gameStart { 
+.gameStart {
+    margin-top: 70px;
     display: flex;
     align-items: center;
     flex-direction: column;
 }
 
- /* Creat/join game screen stuff */
+/* Creat/join game screen stuff */
 
-.IdFetch{
+.IdFetch {
     margin-top: 20px;
     display: flex;
     gap: 90px;
 }
 
-.createGame, .joinGame  {
+.createGame,
+.joinGame {
     all: unset;
     text-align: center;
     margin-top: 2em;
@@ -87,23 +88,23 @@ body {
     cursor: pointer;
 }
 
-.createID ,.joinID{
+.createID,
+.joinID {
     width: 500px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-weight: 600;
-    margin-top: 4em;
     font-family: 'Josefin Slab', serif;
     padding: .5em;
     border-radius: 90px;
     background-color: rgba(217, 217, 217, 1);
-    gap:10px;
+    gap: 10px;
     letter-spacing: .1em;
     font-size: 1.4em;
 }
 
-.idLabel{
+.idLabel {
     padding: 16px 30px 16px 30px;
     box-sizing: border-box;
     background-color: rgba(217, 217, 217, 1);
@@ -111,14 +112,14 @@ body {
     border-bottom-left-radius: 30em;
 }
 
-.enteredGameID{
+.enteredGameID {
     letter-spacing: .2em;
-    all :unset;
+    all: unset;
     border: none;
     font-family: 'Josefin Slab', serif;
 }
 
-.createID > img {
+.createID>img {
     height: 30px;
     width: 25px;
 }
@@ -154,7 +155,7 @@ body {
 .wait-status {
     margin-top: 30px;
     display: flex;
-    flex:7;
+    flex: 7;
 }
 
 .roomNready {
@@ -162,16 +163,17 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    flex:2;
+    flex: 2;
     gap: 20px;
+
 }
 
-.createID{
+.createID {
     margin-top: 10px;
     width: 80%;
 }
 
-.playerList{
+.playerList {
     flex: 1;
 }
 
@@ -179,21 +181,23 @@ body {
     background-color: rgba(217, 217, 217, 1);
 }
 
-.readyButton{
+.readyButton {
     all: unset;
     background-color: rgba(217, 217, 217, 1);
     padding: 20px 30px;
     border-radius: 40px;
-    font-size: 1.3em;
+    font-size: 1.5em;
+    box-shadow: 0px 2px 7px rgba(27, 27, 27, 0.32);
+    cursor: pointer;
 }
 
 
-.playNback{
+.playNback {
     margin-top: 2em;
     display: flex;
     flex-direction: row-reverse;
     justify-content: center;
     align-items: center;
     gap: 40px;
+    padding-right: 50px;
 }
-

@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 
 const Quit = () => {
 
-    const navigate = useNavigate();
-    const onQuitClick = () => {
-        navigate('/quitconfirm');
-      };
+  const navigate = useNavigate();
+  const onQuitClick = () => {
+    navigate('/quitconfirm');
+  };
 
   return (
     <div className="quits" onClick={onQuitClick}>QUIT</div>

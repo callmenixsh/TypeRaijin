@@ -20,12 +20,10 @@ const Settings = () => {
 	return (
 		<>
 			{isSettingsVisible && (
-				<div
-					className="menubar settings"
-					onClick={toggleSetting}
-					style={{ cursor: "pointer", userSelect: "none" }}
-				>
-					SETTINGS
+				<div className="menuBar" onClick={toggleSetting}>
+					<div className="settings">
+						SETTINGS
+					</div>
 				</div>
 			)}
 
@@ -54,7 +52,7 @@ const Settings = () => {
 										</div>
 									</div>
 									<div className="applyButton">
-										<button className="applyChanges">APPLY</button>
+										<button className="applyChanges" onClick={toggleSetting}>APPLY</button>
 									</div>
 								</div>
 							</div>

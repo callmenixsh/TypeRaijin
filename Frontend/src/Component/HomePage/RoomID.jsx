@@ -19,7 +19,7 @@ const RoomID = () => {
             <div className="createID">
                 <div className="idLabel">Room ID : </div>
                 <div className="generatedGameID">{params.roomID}</div>
-                <img src={copyIcon} ></img>
+                <img src={copyIcon} style={{ userSelect: 'none', cursor: 'pointer' }} alt='Copy Tag'></img>
             </div>
         </>
 

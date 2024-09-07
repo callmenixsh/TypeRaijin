@@ -6,13 +6,13 @@ import "./HomeScreen.css";
 export const HomeScreen = () => {
 	const navigate = useNavigate();
 
- const onCreateGameClick = () => {
-  navigate("/creategame");
- }
+	const onCreateGameClick = () => {
+		navigate("/creategame");
+	}
 
- const onJoinGameClick = () => {
-  navigate("/joingame");
- }
+	const onJoinGameClick = () => {
+		navigate("/joingame");
+	}
 
 
 
@@ -21,18 +21,18 @@ export const HomeScreen = () => {
 			<div className="homebody">
 				<div className="info">{/*info-png here*/}</div>
 				<div className="GameTitle">TYPERAIJIN</div>
-				<div className="UserID">
-					<div className="LabelUsername">Enter Username</div>
-					<input type="text" />
-				</div>
-
 				<div className="gameStart">
-          <div className="IdFetch">
-            <div className="createGame" onClick={onCreateGameClick}>CREATE ROOM</div>
-            <div className="joinGame" onClick={onJoinGameClick}>JOIN ROOM</div>
-          </div>
+					<div className="UserID">
+						<div className="LabelUsername">Enter Username</div>
+						<input type="text" />
+					</div>
+
+					<div className="IdFetch">
+						<div className="createGame" onClick={onCreateGameClick}>CREATE ROOM</div>
+						<div className="joinGame" onClick={onJoinGameClick}>JOIN ROOM</div>
+					</div>
 				</div>
-{/* 
+				{/* 
 				<div className="menuBar">
 					<Settings />
 				</div> */}
