@@ -10,6 +10,8 @@ import CreateGame from "./Component/HomePage/CreateHomeScreen.jsx";
 import JoinGame from "./Component/HomePage/JoinHomeScreen.jsx";
 import SettingsMenu from "./Component/GameScreen/SettingsMenu.jsx";
 import ResultPage from "./Component/Result/ResultPage.jsx";
+import EditSettings from "./Component/GameScreen/EditSettings.jsx";
+
 
 const router = createBrowserRouter([
 	{
@@ -48,6 +50,8 @@ const router = createBrowserRouter([
 	{
 		path: "/results",
 		element: <ResultPage/>,
+		path: "/settings",
+		element: <EditSettings />,
 	},
 ]);
 
