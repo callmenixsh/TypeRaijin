@@ -6,12 +6,16 @@ import "./index.css";
 import HomeScreen from "./Component/HomePage/HomeScreen.jsx";
 import GameScreen from "./Component/GameScreen/GameScreen.jsx";
 import QuitConfirm from "./Component/GameScreen/QuitConfirm.jsx";
+import CreateGame from "./Component/HomePage/CreateHomeScreen.jsx";
+import JoinGame from "./Component/HomePage/JoinHomeScreen.jsx";
+import SettingsMenu from "./Component/GameScreen/SettingsMenu.jsx";
+import ResultPage from "./Component/Result/ResultPage.jsx";
 
 const router = createBrowserRouter([
 	{
 		path: "/",
 		element: <HomeScreen />,
-		errorElement: <div>404 Not Found</div>,
+		// errorElement: <div>404 Not Found</div>,
 	},
 	{
 		path: "/gamescreen",
@@ -25,6 +29,25 @@ const router = createBrowserRouter([
 				<QuitConfirm />
 			</>
 		),
+	},
+	{
+		path: "/creategame",
+		element: <CreateGame />,
+	},
+	{
+		path: "/joingame",
+		element: <JoinGame />,
+	},
+	{
+		path: "/gamesettings",
+		element: <>
+		<GameScreen/>
+		<SettingsMenu />
+		</>
+	},
+	{
+		path: "/results",
+		element: <ResultPage/>,
 	},
 ]);
 

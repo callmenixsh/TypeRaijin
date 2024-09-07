@@ -1,0 +1,83 @@
+.resultbody{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Rank {
+    font-size: 24px;
+    /* background-color: #DBDBDB; */
+    border-radius: 50px;
+    padding: 13px 10px 13px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    font-weight: 500;
+    letter-spacing: 5px;
+}
+
+.ResultContainer {
+    margin-top: 10px;
+    /* background-color: red; */
+    display: flex;
+    padding: 10px;
+
+}
+
+.Time-up {
+    background-color: #DBDBDB;
+    border-radius: 50px;
+    padding: 10px;
+    display: flex;
+    padding: 13px;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+}
+
+.Rank-Panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.stats-panel {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 21px;
+}
+
+.Per-Container {  
+    display: flex;
+    justify-content: center;
+    background-color: #DBDBDB;
+    border-radius: 30px;
+    display: flex;
+    align-items: left  ;
+    padding: 20px;
+    flex-direction: column;
+    flex: 10;
+}
+
+.Per-Container h1 {
+    font-size: 25px;
+    margin-top: -30px;
+    font-weight: 300;
+    padding: 0px 10px 3px 10px;
+    border-bottom: 1px solid black;
+    letter-spacing: 2px;
+}
+
+
+.resultOptions{
+    display: flex;
+    justify-content: space-around;
+    flex: 2;
+}
+
+.result-btns{
+    background-color: #DBDBDB;
+    border-radius: 10px;
+}

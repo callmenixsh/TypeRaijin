@@ -1,40 +1,44 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
-import Settings from '../GameScreen/Settings';
-import './HomeScreen.css'
-import '../../App.css';
-
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Settings from "../Sub-component/Settings";
+import "./HomeScreen.css";
 
 export const HomeScreen = () => {
-  const navigate = useNavigate();
+	const navigate = useNavigate();
 
-  const handlePlayClick = () => {
-    navigate('/gamescreen');
-  };
+ const onCreateGameClick = () => {
+  navigate("/creategame");
+ }
+
+ const onJoinGameClick = () => {
+  navigate("/joingame");
+ }
 
 
-  return (
-    <>
-      <div className='bodgy'>
-        <div>{/*info-png here*/}</div>
-        <div className='TypeRaijin'>
-          TYPERAIJIN
-        </div>
-        <div className='UserName'>
-          <div className='Enter'>Enter Username</div>
-          <input type="text" />
-        </div>
-        <div className='ButtHolder'>
-          <button className='Play' onClick={handlePlayClick}>PLAY</button>
-        </div>
 
-        <div className="menuBar">
-        <Settings />
-        </div>
+	return (
+		<>
+			<div className="homebody">
+				<div className="info">{/*info-png here*/}</div>
+				<div className="GameTitle">TYPERAIJIN</div>
+				<div className="UserID">
+					<div className="LabelUsername">Enter Username</div>
+					<input type="text" />
+				</div>
 
-      </div>
-    </>
-  )
-}
+				<div className="gameStart">
+          <div className="IdFetch">
+            <div className="createGame" onClick={onCreateGameClick}>CREATE ROOM</div>
+            <div className="joinGame" onClick={onJoinGameClick}>JOIN ROOM</div>
+          </div>
+				</div>
+{/* 
+				<div className="menuBar">
+					<Settings />
+				</div> */}
+			</div>
+		</>
+	);
+};
 
-export default HomeScreen
+export default HomeScreen;
