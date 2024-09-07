@@ -9,7 +9,7 @@ const ResultPage = () => {
 	const typingSpeed = 50;
 	const typingAcc = 89;
 	const mistakes = 6;
-
+ 
 	return (
 		<>
 			<div className="resultbody">

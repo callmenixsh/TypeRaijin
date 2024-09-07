@@ -1,7 +1,6 @@
 
 .Play {
     all: unset;
-    margin-top: 2em;
     background-color: rgba(217, 217, 217, 1);
     font-size: 2em;
     font-weight: 500;
@@ -34,7 +33,7 @@
 	box-shadow: 0px 2px 7px rgba(53, 53, 53, 0.311);
 }
 
-.menuBar .settings {
+/* .menuBar .settings {
     padding: 5px 10px;
     border: none;
     border-radius: 3px;
@@ -46,4 +45,64 @@
     border: none;
     border-radius: 3px;
     cursor: pointer;
+} */
+
+
+.leaderBoard {
+	background: #dbdbdb;
+	box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+	border-radius: 26px;
+	padding: 14px;
+	margin: 20px;
+	width: 75%;
+	flex: 4;
+}
+
+.leaderLabel {
+	letter-spacing: 0.2em;
+	display: flex;
+	justify-content: center;
+	width: auto;
+	border-bottom: 1px solid rgb(177, 177, 177);
+	margin: 0px 20px 0px 22px;
+	padding: 10px 0px;
+}
+
+.playerList {
+	padding-top: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.playerT {
+	padding: 9px 9px 3px 25px;
+	box-sizing: border-box;
+	background: rgba(247, 247, 247, 0.35);
+	border-radius: 14.1128px 10px 50px 14.11px;
+	font-size: 1.5em;
+}
+
+.playerS {
+	padding: 9px 9px 3px 25px;
+	font-size: 1.2em;
+	width: 70%;
+	background: rgba(247, 247, 247, 0.35);
+	border-radius: 14.1128px 10px 50px 14.11px;
+}
+
+.player1 {
+	border: 2px solid rgba(198, 161, 27, 0.4);
+}
+
+.player2 {
+	border: 1.5px solid rgba(202, 62, 62, 0.4);
+}
+
+.player3 {
+	border: 1.2px solid rgba(99, 38, 115, 0.4);
+}
+
+.player4 {
+	border: 1.2px solid rgba(0, 126, 63, 0.4);
 }

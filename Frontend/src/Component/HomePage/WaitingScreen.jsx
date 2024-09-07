@@ -1,7 +1,9 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import RoomID from '../HomePage/RoomID';
-import './WaitingScreen.css';
+import RoomID from './RoomID';
+import './Homescreen.css';
+import '../Sub-component/Subcomps.css'
+import BackButton from '../Sub-component/BackButton.jsx'
 
 const WaitingScreen = () => {
     const navigate = useNavigate();
@@ -16,7 +18,7 @@ const WaitingScreen = () => {
         <>
             <div className="Wait-Body">
                 <div className='waitMsg'>
-                    <h1>Waiting for other players...</h1>
+                    <h1>Waiting for players...</h1>
                 </div>
                 <div className='wait-status'>
                     <div className="playerList">
@@ -29,6 +31,9 @@ const WaitingScreen = () => {
                         <RoomID />
                         <button className="readyButton" onClick={handleReady}>Ready</button>
                     </div>
+                </div>
+                <div className="menuBar">
+                    <BackButton/>
                 </div>
             </div>
         </>

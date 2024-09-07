@@ -2,15 +2,15 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 // import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import "./index.css";
+import "./helper.css";
 import HomeScreen from "./Component/HomePage/HomeScreen.jsx";
 import GameScreen from "./Component/GameScreen/GameScreen.jsx";
 import QuitConfirm from "./Component/GameScreen/QuitConfirm.jsx";
 import CreateGame from "./Component/HomePage/CreateHomeScreen.jsx";
 import JoinGame from "./Component/HomePage/JoinHomeScreen.jsx";
-import SettingsMenu from "./Component/GameScreen/SettingsMenu.jsx";
+// import SettingsMenu from "./Component/GameScreen/SettingsMenu.jsx";
 import ResultPage from "./Component/Result/ResultPage.jsx";
-import WaitingScreen from "./Component/WaitingScreen/WaitingScreen.jsx";
+import WaitingScreen from "./Component/HomePage/WaitingScreen.jsx";
 
 
 const router = createBrowserRouter([
@@ -40,13 +40,13 @@ const router = createBrowserRouter([
 		path: "/joingame",
 		element: <JoinGame />,
 	},
-	{
-		path: "/gamesettings",
-		element: <>
-			<GameScreen />
-			<SettingsMenu />
-		</>
-	},
+	// {
+	// 	path: "/gamesettings",
+	// 	element: <>
+	// 		<GameScreen />
+	// 		<SettingsMenu />
+	// 	</>
+	// },
 	{
 		path: "/results",
 		element: <ResultPage />,

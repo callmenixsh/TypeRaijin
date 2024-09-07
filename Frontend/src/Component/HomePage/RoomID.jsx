@@ -2,14 +2,15 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import { nanoid } from 'nanoid'; // Ensure you have installed nanoid
 import { useParams } from 'react-router-dom';
+import copyIcon from '../../assets/copy.png'
 
 const RoomID = () => {
     const params = useParams();
     const navigate = useNavigate();
 
     const handleCreateRoom = () => {
-        const roomID = nanoid(6); // Generate a 6-character room ID
-        navigate('/waiting', { state: { roomID } }); // Pass roomID to the waiting screen
+        const roomID = nanoid(6);
+        navigate('/waiting', { state: { roomID } });
     };
 
 
@@ -18,7 +19,7 @@ const RoomID = () => {
             <div className="createID">
                 <div className="idLabel">Room ID : </div>
                 <div className="generatedGameID">{params.roomID}</div>
-                <img src="copy.png"></img>
+                <img src={copyIcon} ></img>
             </div>
         </>
 
