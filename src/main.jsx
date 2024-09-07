@@ -10,7 +10,7 @@ import CreateGame from "./Component/HomePage/CreateHomeScreen.jsx";
 import JoinGame from "./Component/HomePage/JoinHomeScreen.jsx";
 import SettingsMenu from "./Component/GameScreen/SettingsMenu.jsx";
 import ResultPage from "./Component/Result/ResultPage.jsx";
-import EditSettings from "./Component/GameScreen/EditSettings.jsx";
+import WaitingScreen from "./Component/WaitingScreen/WaitingScreen.jsx";
 
 
 const router = createBrowserRouter([
@@ -33,7 +33,7 @@ const router = createBrowserRouter([
 		),
 	},
 	{
-		path: "/creategame",
+		path: "/:roomID",
 		element: <CreateGame />,
 	},
 	{
@@ -43,15 +43,17 @@ const router = createBrowserRouter([
 	{
 		path: "/gamesettings",
 		element: <>
-		<GameScreen/>
-		<SettingsMenu />
+			<GameScreen />
+			<SettingsMenu />
 		</>
 	},
 	{
 		path: "/results",
-		element: <ResultPage/>,
-		path: "/settings",
-		element: <EditSettings />,
+		element: <ResultPage />,
+	},
+	{
+		path: "/waiting",
+		element: <WaitingScreen />
 	},
 ]);
 
