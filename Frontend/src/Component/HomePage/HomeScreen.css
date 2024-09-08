@@ -9,6 +9,22 @@ body {
     height: 80vh;
 }
 
+.infoPng {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.infoPng img {
+    position: absolute;
+    top: -60px;
+    right: -240px;
+    width: 24px;
+    height: 24px;
+    z-index: 1000;
+}
+
 .homebody {
     display: flex;
     align-items: center;
@@ -23,6 +39,17 @@ body {
     border-bottom: 1px solid black;
     letter-spacing: 0.2em;
     width: 600px;
+}
+
+.NameTitle {
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 0px 30px 10px 30px;
+    font-size: 2.5em;
+    border-bottom: 1px solid black;
+    letter-spacing: 4px;
+    max-width: 1600px;
 }
 
 .UserID {
@@ -56,6 +83,7 @@ body {
 }
 
 .gameStart {
+    min-width: 650px;
     margin-top: 70px;
     display: flex;
     align-items: center;

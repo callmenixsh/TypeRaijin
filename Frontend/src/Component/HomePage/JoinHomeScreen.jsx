@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 // import Settings from "../Sub-component/Settings";
 import "./HomeScreen.css";
@@ -7,16 +7,20 @@ import Play from "../Sub-component/Playgame";
 
 export const JoinHomeScreen = () => {
 	const navigate = useNavigate();
+	const [username, setUsername] = useState("");
 
-	const onPlayClick = () => {
-		navigate("/gamescreen");
-	};
+	useEffect(() => {
+		const storedUsername = localStorage.getItem("username");
+		if (storedUsername) {
+			setUsername(storedUsername);
+		}
+	}, []);
 
 	return (
 		<>
 			<div className="bodgy">
 				<div className="info">{/*info-png here*/}</div>
-				<div className="GameTitle">TYPERAIJIN</div>
+				<div className="NameTitle">Welcome, {username}</div>
 
 				<div className="gameStart">
 					<div className="joinID">

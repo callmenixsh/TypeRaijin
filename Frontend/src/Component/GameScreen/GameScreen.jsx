@@ -21,7 +21,7 @@ const GameScreen = () => {
                 <input className="typingPanel" spellcheck="false" maxlength="10" />
 
                 <div className="menuBar">
-                    <Quits/>
+                    <Quits />
                 </div>
             </div>
         </div>
