@@ -24,8 +24,8 @@ export const JoinHomeScreen = () => {
 
 				<div className="gameStart">
 					<div className="joinID">
-						<div className="idLabel">JOIN ROOM : </div>
-						<input className="enteredGameID" />
+						<div className="idLabel" >JOIN ROOM : </div>
+						<input className="enteredGameID" maxLength="6"/>
 					</div>
 					<div className="playNback">
 						<Play />

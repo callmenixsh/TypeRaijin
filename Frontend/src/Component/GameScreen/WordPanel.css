@@ -1,0 +1,30 @@
+.wordPanel {
+    position: relative;
+    overflow: hidden;
+    height: 300px; /* Adjust based on your design */
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.word {
+    position: absolute;
+    left: -100px; 
+    animation: moveRight 8s linear forwards;
+    font-size: 1.5rem;
+    white-space: nowrap;
+    text-transform: uppercase;
+}
+
+.word p {
+    padding: 10px;
+}
+
+@keyframes moveRight {
+    from {
+        left: -100px;
+    }
+    to {
+        left: 100%; /* Moves the word out of the screen */
+    }
+}

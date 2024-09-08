@@ -38,7 +38,7 @@ body {
     text-align: center;
     border-bottom: 1px solid black;
     letter-spacing: 0.2em;
-    width: 600px;
+    width: 550px;
 }
 
 .NameTitle {
@@ -83,7 +83,7 @@ body {
 }
 
 .gameStart {
-    min-width: 650px;
+    min-width: 550px;
     margin-top: 70px;
     display: flex;
     align-items: center;
@@ -118,7 +118,6 @@ body {
 
 .createID,
 .joinID {
-    width: 500px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -133,7 +132,7 @@ body {
 }
 
 .idLabel {
-    padding: 16px 30px 16px 30px;
+    padding: 16px 5px 16px 30px;
     box-sizing: border-box;
     background-color: rgba(217, 217, 217, 1);
     border-top-left-radius: 30em;
@@ -145,6 +144,7 @@ body {
     all: unset;
     border: none;
     font-family: 'Josefin Slab', serif;
+    width: 100px;
 }
 
 .createID>img {

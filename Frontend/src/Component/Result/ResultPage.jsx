@@ -37,9 +37,9 @@ const ResultPage = () => {
 				</div>
 			</div>
 
-			<div className="menuBar">
+			{/* <div className="menuBar"> */}
 				<Settings />
-			</div>
+			{/* </div> */}
 		</>
 	);
 };

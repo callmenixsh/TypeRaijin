@@ -38,6 +38,9 @@
 }
 
 .timer {
+	box-sizing: border-box;
+	min-width: 200px;
+	justify-content: center;
 	padding: 15px 40px;
 	display: flex;
 	font-size: 2em;
@@ -54,9 +57,31 @@
 	align-items: center;
 	padding: 10px;
 	margin: 30px;
-	height: 70%;
-	letter-spacing: 1.5em;
+	letter-spacing: .3em;
+    position: relative;
+    overflow: hidden;
+    height: 300px; /* Adjust based on your design */
+    align-items: center;
 }
+
+.word {
+    position: absolute;
+    left: -100px; /* Start position off the screen */
+    animation: moveRight 10s linear forwards;
+    font-size: 1.5rem;
+    white-space: nowrap;
+}
+
+@keyframes moveRight {
+    from {
+        left: -100px;
+    }
+    to {
+        left: 100%; /* Moves the word out of the screen */
+    }
+}
+
+
 
 .typingPanel {
 
@@ -78,3 +103,23 @@
 	outline: none;
 }
 
+/* countdown overlay css  */
+.countdown-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.countdown-text {
+    color: white;
+    font-size: 5rem;
+    font-weight: bold;
+    text-align: center;
+}

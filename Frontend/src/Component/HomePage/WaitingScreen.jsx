@@ -1,18 +1,19 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import RoomID from './RoomID';
 import './Homescreen.css';
-import '../Sub-component/Subcomps.css'
-import BackButton from '../Sub-component/BackButton.jsx'
+import '../Sub-component/Subcomps.css';
+import BackButton from '../Sub-component/BackButton.jsx';
 
 const WaitingScreen = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const username = location.state?.username || "Guest"; // Retrieve username from state
+    const [players, setPlayers] = useState([username, "Red", "Purple", "Green"]);
 
     const handleReady = () => {
         navigate('/gamescreen');
-    }
-
-
+    };
 
     return (
         <>
@@ -22,10 +23,10 @@ const WaitingScreen = () => {
                 </div>
                 <div className='wait-status'>
                     <div className="playerList">
-                        <div className="player1 playerS">Yellow</div>
-                        <div className="player2 playerS">Red</div>
-                        <div className="player3 playerS">Purple</div>
-                        <div className="player4 playerS">Green</div>
+                        <div className="player1 playerS">{players[0]}</div>
+                        <div className="player2 playerS">{players[1]}</div>
+                        <div className="player3 playerS">{players[2]}</div>
+                        <div className="player4 playerS">{players[3]}</div>
                     </div>
                     <div className='roomNready'>
                         <RoomID />
@@ -37,7 +38,7 @@ const WaitingScreen = () => {
                 </div>
             </div>
         </>
-    )
+    );
 }
 
-export default WaitingScreen
+export default WaitingScreen;
