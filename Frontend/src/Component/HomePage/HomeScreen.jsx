@@ -5,16 +5,13 @@ import infoIcon from "../../assets/info.png";
 
 export const HomeScreen = () => {
   const navigate = useNavigate();
-  // Username state
   const [username, setUsername] = useState("");
 
-  // Function to generate a random guest username
   const generateRandomUsername = () => {
     const randomNumber = Math.floor(1000 + Math.random() * 9000);
     return `Guest${randomNumber}`;
   };
 
-  // useEffect to set or retrieve username from localStorage
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     if (storedUsername) {
@@ -26,30 +23,26 @@ export const HomeScreen = () => {
     }
   }, []);
 
-  // Handle username change
   const handleUsernameChange = (e) => {
     const newUsername = e.target.value;
     setUsername(newUsername);
     localStorage.setItem("username", newUsername);
   };
 
-  // Handle create game click
   const onCreateGameClick = () => {
-    // Clear the existing room ID to ensure a new one is generated
     localStorage.removeItem('roomID');
     console.log("Username:", username);
-    navigate("/creategame", { state: { username } }); // Pass username as state
+    navigate("/creategame", { state: { username } });
   };
 
-  // Handle join game click
   const onJoinGameClick = () => {
     console.log("Username:", username);
-    navigate("/joingame", { state: { username } }); // Pass username as state
+    navigate("/joingame", { state: { username } }); 
   };
 
   return (
     <>
-      <div className="infoPng"><img src={infoIcon} alt="Info Icon" /></div>
+      {/* <div className="infoPng"><img src={infoIcon} alt="Info Icon" /></div> */}
       <div className="homebody">
         <div className="GameTitle">TYPERAIJIN</div>
         <div className="gameStart">

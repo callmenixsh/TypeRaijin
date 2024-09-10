@@ -6,7 +6,7 @@ const Playgame = () => {
   const navigate = useNavigate();
 
   const handlePlayClick = () => {
-    navigate("/waiting");
+    navigate("/in-queue");
   };
 
   return (

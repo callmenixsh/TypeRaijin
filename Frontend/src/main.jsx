@@ -1,6 +1,5 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-// import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./helper.css";
 import HomeScreen from "./Component/HomePage/HomeScreen.jsx";
@@ -8,7 +7,6 @@ import GameScreen from "./Component/GameScreen/GameScreen.jsx";
 import QuitConfirm from "./Component/GameScreen/QuitConfirm.jsx";
 import CreateGame from "./Component/HomePage/CreateHomeScreen.jsx";
 import JoinGame from "./Component/HomePage/JoinHomeScreen.jsx";
-// import SettingsMenu from "./Component/GameScreen/SettingsMenu.jsx";
 import ResultPage from "./Component/Result/ResultPage.jsx";
 import WaitingScreen from "./Component/HomePage/WaitingScreen.jsx";
 
@@ -17,7 +15,7 @@ const router = createBrowserRouter([
 	{
 		path: "/",
 		element: <HomeScreen />,
-		// errorElement: <div>404 Not Found</div>,
+		errorElement: <div>404 Not Found</div>,
 	},
 	{
 		path: "/gamescreen",
@@ -33,26 +31,19 @@ const router = createBrowserRouter([
 		),
 	},
 	{
-		path: "/:roomID",
+		path: "/creategame",
 		element: <CreateGame />,
 	},
 	{
 		path: "/joingame",
 		element: <JoinGame />,
 	},
-	// {
-	// 	path: "/gamesettings",
-	// 	element: <>
-	// 		<GameScreen />
-	// 		<SettingsMenu />
-	// 	</>
-	// },
 	{
-		path: "/results",
+		path: "/result",
 		element: <ResultPage />,
 	},
 	{
-		path: "/waiting",
+		path: "/in-queue",
 		element: <WaitingScreen />
 	},
 ]);

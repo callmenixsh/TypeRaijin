@@ -2,7 +2,7 @@
 
 
 .boddy {
-	margin-top: 90px;
+	margin-top: 2vh;
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
@@ -14,7 +14,7 @@
 	width: 95vw;
 	height: 70vh;
 	background: #e4e2e2;
-	border-radius: 7px;
+	border-radius: 1vh;
 	align-items: center;
 }
 
@@ -23,77 +23,55 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: space-around;
-	margin: 100px 5px;
-	padding: 30px 5px;
-	padding-right: 5px;
-	border-right: rgb(143, 169, 160) 2px solid;
+	justify-content: center;
+	margin: 10vh .9vh;
+	padding: 3vh .9v;
+	padding-right: .5vh;
+	border-left: rgb(143, 169, 160) .3vh solid;
 	box-sizing: border-box;
 	height: 90%;
 }
 
 .titleBar {
+	font-size: 2.4vh;
+	font-weight: bold;
+	display: flex;
+	align-items: center;
 	flex: 1;
-	padding-bottom: 20px;
+	padding-bottom: 2vh;
+	gap: 1vh;
+}
+
+.titleBar img{ 
+	height: 4vh;
 }
 
 .timer {
 	box-sizing: border-box;
-	min-width: 200px;
+	min-width: 23vh;
 	justify-content: center;
-	padding: 15px 40px;
+	padding: 1vh 0vw;
 	display: flex;
-	font-size: 2em;
-	background: #dbdbdb;
-	box-shadow: 0px 0px 3.5px rgba(0, 0, 0, 0.25);
+	font-size: 3.5vh;
+	background: #e5e4e4;
+	box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.116);
 	border-radius: 40px;
 	letter-spacing: .2em;
 	flex: 0.3;
 }
 
-.wordPanel {
-	flex: 5;
-	display: flex;
-	align-items: center;
-	padding: 10px;
-	margin: 30px;
-	letter-spacing: .3em;
-    position: relative;
-    overflow: hidden;
-    height: 300px; /* Adjust based on your design */
-    align-items: center;
-}
-
-.word {
-    position: absolute;
-    left: -100px; /* Start position off the screen */
-    animation: moveRight 10s linear forwards;
-    font-size: 1.5rem;
-    white-space: nowrap;
-}
-
-@keyframes moveRight {
-    from {
-        left: -100px;
-    }
-    to {
-        left: 100%; /* Moves the word out of the screen */
-    }
-}
-
 
 
 .typingPanel {
-
 	font-family: 'Josefin Slab', serif;
-	margin-top: 30px;
-	padding: 20px 10px;
-	font-size: 2em;
+	margin-top: 3vh;
+	padding: 2vh 1vh;
+	font-size: 4vh;
 	letter-spacing: .8em;
 	width: 80vw;
 	background: #e4e2e2;
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	border-radius: 10px;
+	box-shadow: 0px .4vh .4vh rgba(0, 0, 0, 0.25);
+	border-radius: 10vh;
 	text-align: center;
 	border: none;
 	text-transform: uppercase;
@@ -122,4 +100,8 @@
     font-size: 5rem;
     font-weight: bold;
     text-align: center;
+}
+
+.word.invisible {
+    visibility: hidden;
 }

@@ -1,97 +1,158 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./WordPanel.css";
 
-const WordPanel = ({ showCountdown }) => {
-	const [words, setWords] = useState([]);
-	const wordsList = useRef([]);
-	const usedWords = useRef(new Set());
-	const panelRef = useRef(null); // Reference to the panel for position calculations
+const NUM_Y_POSITIONS = 6;
 
-	// Function to fetch words from the API
-	const fetchRandomWords = async () => {
-		try {
-			const response = await fetch(
-				"https://random-word-api.herokuapp.com/word?number=10"
-			);
-			const data = await response.json();
-			const filteredWords = data.filter((word) => word.length <= 10);
+const WordPanel = ({ showCountdown, onUpdateWords, currentInput, focusedWord }) => {
+    const [words, setWords] = useState([]);
+    const [highlightedWord, setHighlightedWord] = useState(null);
+    const wordsList = useRef([]);
+    const usedWords = useRef(new Set());
+    const lastYPos = useRef(null);
 
-			// Update wordsList with new words
-			wordsList.current = [...wordsList.current, ...filteredWords];
-		} catch (error) {
-			console.error("Error fetching words:", error);
-		}
-	};
+    const yPositions = Array.from(
+        { length: NUM_Y_POSITIONS },
+        (_, i) => (i + 1) * (80 / NUM_Y_POSITIONS - 2)
+    );
 
-	// Function to check if a new word overlaps with existing words
-	const isOverlapping = (newY, wordHeight) => {
-		const panel = panelRef.current;
-		if (!panel) return false;
+    const fetchRandomWords = async () => {
+        try {
+            const response = await fetch(
+                "https://random-word-api.herokuapp.com/word?number=10"
+            );
+            const data = await response.json();
+            const filteredWords = data.filter((word) => word.length <= 10);
+            wordsList.current = [...wordsList.current, ...filteredWords];
+        } catch (error) {
+            console.error("Error fetching words:", error);
+        }
+    };
 
-		return words.some((word) => {
-			const existingWordTop = word.yPos;
-			const existingWordBottom = existingWordTop + wordHeight;
+    const getUniqueWord = () => {
+        if (wordsList.current.length === 0) {
+            fetchRandomWords();
+            return null;
+        }
 
-			return (
-				(newY >= existingWordTop && newY < existingWordBottom) ||
-				(newY + wordHeight > existingWordTop &&
-					newY + wordHeight <= existingWordBottom)
-			);
-		});
-	};
+        let randomWord = null;
+        while (randomWord === null || usedWords.current.has(randomWord)) {
+            if (wordsList.current.length === 0) {
+                return null;
+            }
+            randomWord =
+                wordsList.current[Math.floor(Math.random() * wordsList.current.length)];
+        }
 
-	// Function to get a random unique word
-	const getUniqueWord = () => {
-		if (wordsList.current.length === 0) {
-			fetchRandomWords();
-			return null;
-		}
+        usedWords.current.add(randomWord);
+        wordsList.current = wordsList.current.filter((word) => word !== randomWord);
+        return randomWord;
+    };
 
-		let randomWord = null;
-		while (randomWord === null || usedWords.current.has(randomWord)) {
-			if (wordsList.current.length === 0) {
-				return null; // No more words available
-			}
-			randomWord =
-				wordsList.current[Math.floor(Math.random() * wordsList.current.length)];
-		}
+    const getRandomYPosition = () => {
+        let newYPos;
+        do {
+            newYPos = yPositions[Math.floor(Math.random() * yPositions.length)];
+        } while (newYPos === lastYPos.current);
 
-		usedWords.current.add(randomWord);
-		wordsList.current = wordsList.current.filter((word) => word !== randomWord);
-		return randomWord;
-	};
+        lastYPos.current = newYPos;
+        return newYPos;
+    };
 
-	useEffect(() => {
-		fetchRandomWords();
+    useEffect(() => {
+        if (!showCountdown) {
+            fetchRandomWords();
 
-		if (!showCountdown) {
-			const wordInterval = setInterval(() => {
-				let randomWord = getUniqueWord();
-				if (!randomWord) return;
+            const wordInterval = setInterval(() => {
+                let randomWord = getUniqueWord();
+                if (!randomWord) return;
 
-				let wordHeight = 20;
-				let randomY = Math.random() * (100 - wordHeight);
+                let randomY = getRandomYPosition();
 
-				// Add the word to the state
-				setWords((prevWords) => [
-					...prevWords,
-					{ text: randomWord, id: Date.now(), yPos: randomY },
-				]);
-			}, 2000);
+                setWords((prevWords) => [
+                    ...prevWords,
+                    {
+                        text: randomWord,
+                        id: Date.now(),
+                        yPos: randomY,
+                        xPos: 100,
+                        visible: true,
+                    },
+                ]);
+            }, 1800);
 
-			return () => clearInterval(wordInterval);
-		}
-	}, [showCountdown]);
+            return () => clearInterval(wordInterval);
+        }
+    }, [showCountdown]);
 
-	return (
-		<div className="wordPanel" ref={panelRef}>
-			{words.map((word) => (
-				<div key={word.id} className="word" style={{ top: `${word.yPos}%` }}>
-					<p>{word.text}</p>
-				</div>
-			))}
-		</div>
-	);
+    useEffect(() => {
+        if (showCountdown) return;
+
+        let animationFrameId;
+
+        const moveWords = () => {
+            setWords((prevWords) =>
+                prevWords.map((word) => ({
+                    ...word,
+                    xPos: word.xPos - 0.1899,
+                    visible: word.xPos > 0,
+                }))
+            );
+
+            animationFrameId = requestAnimationFrame(moveWords);
+        };
+
+        animationFrameId = requestAnimationFrame(moveWords);
+
+        return () => cancelAnimationFrame(animationFrameId);
+    }, [words, showCountdown]);
+
+    useEffect(() => {
+        onUpdateWords(words);
+    }, [words, onUpdateWords]);
+
+    useEffect(() => {
+        if (focusedWord && currentInput === focusedWord.text) {
+            setHighlightedWord(focusedWord);
+            const timer = setTimeout(() => {
+                setHighlightedWord(null); 
+            }, 500);
+
+            return () => clearTimeout(timer);
+        }
+    }, [currentInput, focusedWord]);
+
+    return (
+        <div className="wordPanel">
+            {words.map((word) => (
+                <div
+                    key={word.id}
+                    className={`word ${word.visible ? "" : "invisible"}`}
+                    style={{ top: `${word.yPos}%`, left: `${word.xPos}%` }}
+                >
+                    <p>
+                        {word.text.split("").map((char, index) => {
+                            const isCharTyped = focusedWord && focusedWord.id === word.id && index < currentInput.length;
+                            const isCharMatch = isCharTyped && char === currentInput[index];
+                            const isLastChar = focusedWord && focusedWord.id === word.id && index === currentInput.length - 1;
+                            const isHighlighted = isCharMatch || (isLastChar && highlightedWord === focusedWord);
+
+                            return (
+                                <span
+                                    key={index}
+                                    style={{
+                                        color: isHighlighted ? "green" : "black",
+                                        fontWeight: isHighlighted ? "bold" : "600",
+                                    }}
+                                >
+                                    {char}
+                                </span>
+                            );
+                        })}
+                    </p>
+                </div>
+            ))}
+        </div>
+    );
 };
 
 export default WordPanel;
