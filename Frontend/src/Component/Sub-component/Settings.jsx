@@ -1,81 +1,122 @@
 import React, { useState } from "react";
 import "./Subcomps.css";
-import "../GameScreen/SettingsMenu.css";
+import "./SettingsMenu.css";
 
-const Settings = ({ onTimerChange }) => {
-    const [phase, setPhase] = useState(false);
-    const [selectedTime, setSelectedTime] = useState('60s'); // Default timer
+const Settings = ({
+	selectedTime,
+	selectedDiff,
+	setSelectedTime,
+	setSelectedDiff,
+}) => {
+	const [phase, setPhase] = useState(false);
+	const toggleSetting = () => {
+		setPhase(!phase);
+	};
 
-    const toggleSetting = () => {
-        setPhase(!phase);
-    };
+	const handleTimeChange = (time) => {
+		setSelectedTime(time);
+	};
 
-    const handleTimeChange = (time) => {
-        setSelectedTime(time);
-    };
+	const handleDiffChange = (diff) => {
+		setSelectedDiff(diff);
+	};
 
-    const handleApply = () => {
-        // Convert selected time to seconds
-        const seconds = parseInt(selectedTime, 10);
-        onTimerChange(seconds / 60); // Convert to minutes for GameScreen
-        toggleSetting(); // Close settings after applying
-    };
+	const handleApply = () => {
+		toggleSetting();
+        // console.log(selectedTime);
+        // console.log(selectedDiff);
+	};
 
-    return (
-        <>
-            <div className="menuBar" onClick={toggleSetting}>
-                <div className="settings">SETTINGS</div>
-            </div>
+	return (
+		<>
+			<div className="menuBar" onClick={toggleSetting}>
+				<div className="settings">SETTINGS</div>
+			</div>
 
-            {phase && (
-                <>
-                    <div className="overlayed">
-                        <div className="settingBody">
-                            <div className="settingsPanel">
-                                <div className="settingLabel">SETTINGS</div>
+			{phase && (
+				<>
+					<div className="overlayed">
+						<div className="settingBody">
+							<div className="settingsPanel">
+								<div className="settingLabel" style={{ fontWeight: "1000" }}>
+									SETTINGS
+								</div>
 
-                                <div className="gameOptions">
-                                    <div className="timerS">
-                                        <div className="timerLabel">Timer :</div>
-                                        <div className="timerOptions">
-                                            <div
-                                                className={`option ${selectedTime === '15s' ? 'activeoption' : ''}`}
-                                                onClick={() => handleTimeChange('15s')}
-                                            >
-                                                15s
-                                            </div>
-                                            <div
-                                                className={`option ${selectedTime === '30s' ? 'activeoption' : ''}`}
-                                                onClick={() => handleTimeChange('30s')}
-                                            >
-                                                30s
-                                            </div>
-                                            <div
-                                                className={`option ${selectedTime === '60s' ? 'activeoption' : ''}`}
-                                                onClick={() => handleTimeChange('60s')}
-                                            >
-                                                60s
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="applyButton">
-                                        <button className="applyChanges" onClick={handleApply}>APPLY</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            className="menuBar"
-                            onClick={toggleSetting}
-                            style={{ cursor: "pointer", userSelect: "none" }}
-                        >
-                            <div className="exitSettings">X</div>
-                        </div>
-                    </div>
-                </>
-            )}
-        </>
-    );
+								<div className="gameOptions">
+									<div className="timerS">
+										<div className="timerLabel" style={{ fontWeight: "1000" }}>
+											Timer :
+										</div>
+										<div className="timerOptions">
+											<div
+												className={`option ${
+													selectedTime === "30" ? "activeoption" : ""
+												}`}
+												onClick={() => handleTimeChange("30")}
+											>
+												30s
+											</div>
+											<div
+												className={`option ${
+													selectedTime === "60" ? "activeoption" : ""
+												}`}
+												onClick={() => handleTimeChange("60")}
+											>
+												60s
+											</div>
+											<div
+												className={`option ${
+													selectedTime === "90" ? "activeoption" : ""
+												}`}
+												onClick={() => handleTimeChange("90")}
+											>
+												90s
+											</div>
+										</div>
+									</div>
+									<div className="diffS">
+										<div className="diffLabel" style={{ fontWeight: "1000" }}>
+											Difficulty :
+										</div>
+										<div className="diffOptions">
+											<div
+												className={`option ${
+													selectedDiff === "slow" ? "activeoption" : ""
+												}`}
+												onClick={() => handleDiffChange("slow")}
+											>
+												Slow
+											</div>
+											<div
+												className={`option ${
+													selectedDiff === "fast" ? "activeoption" : ""
+												}`}
+												onClick={() => handleDiffChange("fast")}
+											>
+												Fast
+											</div>
+										</div>
+									</div>
+									<div className="applyButton">
+										<button className="applyChanges" onClick={handleApply}>
+											APPLY
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div
+							className="menuBar"
+							onClick={toggleSetting}
+							style={{ cursor: "pointer", userSelect: "none" }}
+						>
+							<div className="exitSettings">X</div>
+						</div>
+					</div>
+				</>
+			)}
+		</>
+	);
 };
 
 export default Settings;

@@ -54,10 +54,12 @@ body {
 }
 
 .UserID {
-    font-size: 1.2 em;
     display: flex;
-    font-weight: 600;
     justify-content: center;
+}
+
+.UserID *{
+    font-size: 20px;
 }
 
 .UserID input {
@@ -69,6 +71,7 @@ body {
     border-bottom-right-radius: 30em;
     border-left: 2px solid rgba(170, 182, 178, 1);
     background-color: rgba(217, 217, 217, 1);
+    font-size: 1.7 em;
 }
 
 .UserID input:focus {
@@ -145,7 +148,7 @@ body {
     all: unset;
     border: none;
     font-family: 'Josefin Slab', serif;
-    width: 100px;
+    width: 180px;
 }
 
 .createID>img {

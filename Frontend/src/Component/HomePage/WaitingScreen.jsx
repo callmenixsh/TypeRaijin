@@ -8,13 +8,24 @@ import BackButton from '../Sub-component/BackButton.jsx';
 const WaitingScreen = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const username = location.state?.username || "Guest"; // Retrieve username from state
+
+    const username = location.state?.username || "Guest";
+    const initialTime = location.state?.initialTime;
+    
+    const setDifficulty = location.state?.setDifficulty;
     const [players, setPlayers] = useState([username, "Red", "Purple", "Green"]);
 
     const handleReady = () => {
-        navigate('/gamescreen');
+        navigate("/gamescreen", {
+            state: {
+                initialTime: initialTime,
+                setDifficulty: setDifficulty
+            }
+        });
+        
+        console.log(setDifficulty);
+        console.log(initialTime);
     };
-
     return (
         <>
             <div className="Wait-Body">

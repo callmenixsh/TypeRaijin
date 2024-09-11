@@ -2,37 +2,38 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: rgba(170, 182, 178, 1);
+    padding: 7vh 20vh;
 }
 
 .Rank {
-    font-size: 24px;
+    font-size: 5vh;
     color: rgba(0, 0, 0, 0.701);
     /* background-color: #DBDBDB; */
-    border-radius: 50px;
-    padding: 13px 10px 13px 10px;
+    border-radius: 5vh;
+    padding: 1.7vh 1.3vh;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 90%;
     font-weight: 500;
-    letter-spacing: 5px;
+    letter-spacing: .7vh;
 }
 
 .ResultContainer { 
-    margin-top: 10px;
-    /* background-color: red; */
+    margin-top: 1vh;
     display: flex;
-    padding: 10px;
+    padding: 1.5vh;
 
 }
 
 .Time-up {
+    font-size: 3vh;
     background-color: #DBDBDB;
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 50px;
-    padding: 10px;
+    box-shadow: 0 0 .7vh rgba(0, 0, 0, 0.25);
+    border-radius: 5vh;
     display: flex;
-    padding: 13px;
+    padding: 2vh;
     justify-content: center;
     align-items: center;
     width: 60%;
@@ -48,49 +49,49 @@
 .stats-panel {
     display: flex;
     flex-direction: column;
-    margin-bottom: 21px;
+    margin-bottom: 4vh;
+    width: 50vh;
 }
 
 .Per-Container {
-
+    height: 35vh;
+    font-size: 2.4vh;
     display: flex;
     justify-content: center;
     background-color: #DBDBDB;
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 30px;
+    box-shadow: 0 0 .7vh rgba(0, 0, 0, 0.25);
+    border-radius: 3vh;
     display: flex;
     align-items: left;
-    padding: 50px 40px 20px 40px;
+    padding: 6vh 4vh 2vh 4vh;
     flex-direction: column;
-    flex: 10;
 }
 
 .Per-Container h1 {
-
-    font-size: 25px;
-    margin-top: -30px;
+    font-size: 4vh;
+    text-align: center;
     font-weight: 300;
-    padding: 0px 10px 3px 10px;
-    border-bottom: 1px solid black;
-    letter-spacing: 2px;
+    padding: 0 1vh .3vh 1vh;
+    border-bottom: .2vh solid black;
+    letter-spacing: .6vh;
 }
 
 
 .resultOptions {
     display: flex;
     justify-content: space-around;
-    flex: 2;
 }
 
 .result-btns {
+    font-size: 2.4vh;
     background-color: #DBDBDB;
-    margin-top: 10px;
-    gap: 90px;
-    border-radius: 50px;
+    margin-top: 1vh;
+    gap: 100vh;
+    border-radius: 5vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0px 10px 0px 10px;
+    padding: 1vh 2vh;
     flex-direction: column;
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 .4vh rgba(0, 0, 0, 0.25);
 }

@@ -48,7 +48,7 @@ export const HomeScreen = () => {
         <div className="gameStart">
           <div className="UserID">
             <div className="LabelUsername">Enter Username</div>
-            <input type="text" value={username} onChange={handleUsernameChange} />
+            <input type="text" value={username} onChange={handleUsernameChange} required/>
           </div>
 
           <div className="IdFetch">

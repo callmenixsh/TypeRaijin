@@ -37,7 +37,7 @@
 
 
 .menuBar .settings {
-	padding: 5px 10px;
+	padding: 1.3vh;
 	border: none;
 	border-radius: 3px;
 	cursor: pointer;
@@ -47,8 +47,7 @@
 	border: none;
 	border-radius: 3px;
 	cursor: pointer;
-	padding: 1.4vh;
-	/* background-color: red; */
+	padding: 1.3vh;
 }
 
 
@@ -57,13 +56,13 @@
 	box-shadow: 0px 0px .7vh rgba(0, 0, 0, 0.124);
 	border-radius: 2vh;
 	padding: 1.7vh;
-	margin: 5vh;
+	margin: 4vh;
 	width: 75%;
-	flex: 4;
+	height: 33vh;
 }
 
 .leaderLabel {
-	font-size: 2.4vh;
+	font-size: 2.7vh;
 	letter-spacing: 0.2em;
 	display: flex;
 	justify-content: center;
@@ -77,18 +76,18 @@
 	padding-top: 2vh;
 	display: flex;
 	flex-direction: column;
-	gap: 1vh;
+	gap: 1.3vh;
 }
 
 .playerT {
-	padding: 1vh 1vh .3vh 2vh;
+	padding: 1.4vh 1vh .6vh 2vh;
 	background: rgba(247, 247, 247, 0.35);
 	border-radius: 14.1128px 10px 50px 14.11px;
 	font-size: 3vh;
 }
 
 .playerS {
-	padding: 1vh 1vh .3vh 2vh;
+	padding: 1.4vh 1vh .6vh 2vh;
 	font-size: 2.5vh;
 	width: 70%;
 	background: rgba(247, 247, 247, 0.35);

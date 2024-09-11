@@ -3,7 +3,7 @@ import "./WordPanel.css";
 
 const NUM_Y_POSITIONS = 6;
 
-const WordPanel = ({ showCountdown, onUpdateWords, currentInput, focusedWord }) => {
+const WordPanel = ({ showCountdown, onUpdateWords, currentInput, focusedWord , gameDifficulty}) => {
     const [words, setWords] = useState([]);
     const [highlightedWord, setHighlightedWord] = useState(null);
     const wordsList = useRef([]);
@@ -78,7 +78,7 @@ const WordPanel = ({ showCountdown, onUpdateWords, currentInput, focusedWord }) 
                         visible: true,
                     },
                 ]);
-            }, 1800);
+            }, gameDifficulty);
 
             return () => clearInterval(wordInterval);
         }

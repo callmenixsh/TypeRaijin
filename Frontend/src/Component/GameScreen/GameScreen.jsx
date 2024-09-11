@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './GameScreen.css';
 import Quits from '../Sub-component/Quit';
 import Leaderboard from '../Sub-component/Leaderboard';
@@ -7,13 +7,20 @@ import CountdownOverlay from './CountdownOverlay';
 import WordPanel from './WordPanel';
 import logoIcon from '../../assets/logo.png';
 
-const GameScreen = ({ initialTime = 10 }) => {
+const GameScreen = () => {
+    const location = useLocation();
+    const initialTime = location.state?.initialTime || 60;
+
+    const setDifficulty = location.state?.setDifficulty;
+    const gameDifficulty = setDifficulty === "fast" ? 1000 : 2000;
+
+    const [timeLeft, setTimeLeft] = useState(initialTime);
     const [showCountdown, setShowCountdown] = useState(true);
-    const [timeLeft, setTimeLeft] = useState(initialTime * 60);
     const [currentInput, setCurrentInput] = useState('');
     const [currentWords, setCurrentWords] = useState([]);
     const [focusedWord, setFocusedWord] = useState(null);
     const navigate = useNavigate();
+
 
     const handleCountdownComplete = () => {
         setShowCountdown(false);
@@ -89,6 +96,7 @@ const GameScreen = ({ initialTime = 10 }) => {
                     onUpdateWords={handleUpdateWords}
                     currentInput={currentInput}
                     focusedWord={focusedWord}
+                    gameDifficulty={gameDifficulty}
                 />
                 <div className="tabList">
                     <div className="titleBar">

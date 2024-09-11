@@ -10,6 +10,9 @@ import BackButton from "../Sub-component/BackButton";
 export const CreateHomeScreen = () => {
 	const navigate = useNavigate();
 	const [username, setUsername] = useState("");
+	
+const [selectedTime, setSelectedTime] = useState('60');
+const [selectedDiff, setSelectedDiff] = useState('slow'); 
 
 	useEffect(() => {
 		const storedUsername = localStorage.getItem("username");
@@ -28,14 +31,22 @@ export const CreateHomeScreen = () => {
 				<div className="gameStart">
 					<RoomID />
 					<div className="playNback">
-						<Play />
+						<Play 
+							initialTime={selectedTime}
+							setDifficulty={selectedDiff}
+						/>
 						<BackButton />
 					</div>
 				</div>
 
 				{/* <div className="menuBar"> */}
-				<Settings />
-				{/* </div> */}
+				<Settings 
+					selectedTime={selectedTime}
+					selectedDiff={selectedDiff}
+					setSelectedDiff={setSelectedDiff}
+					setSelectedTime={setSelectedTime}
+				/>
+				
 			</div>
 		</>
 	);
