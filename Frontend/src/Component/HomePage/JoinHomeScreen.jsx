@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 // import Settings from "../Sub-component/Settings";
 import "./HomeScreen.css";
 import BackButton from "../Sub-component/BackButton";
-import Play from "../Sub-component/Playgame";
+import JoinRoom from "../Sub-component/JoinRoom";
 
 export const JoinHomeScreen = () => {
 	const navigate = useNavigate();
@@ -25,10 +25,10 @@ export const JoinHomeScreen = () => {
 				<div className="gameStart">
 					<div className="joinID">
 						<div className="idLabel" >JOIN ROOM : </div>
-						<input className="enteredGameID" maxLength="6"/>
+						<input className="enteredGameID" maxLength="6" />
 					</div>
 					<div className="playNback">
-						<Play />
+						<JoinRoom />
 						<BackButton />
 					</div>
 				</div>

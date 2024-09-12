@@ -9,6 +9,7 @@ import CreateGame from "./Component/HomePage/CreateHomeScreen.jsx";
 import JoinGame from "./Component/HomePage/JoinHomeScreen.jsx";
 import ResultPage from "./Component/Result/ResultPage.jsx";
 import WaitingScreen from "./Component/HomePage/WaitingScreen.jsx";
+import NotFound from "./Component/HomePage/NotFound.jsx";
 
 
 const router = createBrowserRouter([
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
 	{
 		path: "/in-queue",
 		element: <WaitingScreen />
+	},
+	{
+		path: "*",
+		element: <NotFound />,
 	},
 ]);
 
