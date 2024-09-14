@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./HomeScreen.css";
 import socket from "../../socket";
-import RoomID from "./RoomID";
+// import RoomID from "./RoomID";
 
 export const HomeScreen = () => {
   const navigate = useNavigate();

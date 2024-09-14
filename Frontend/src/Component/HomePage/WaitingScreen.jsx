@@ -10,53 +10,83 @@ const WaitingScreen = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const username = location.state?.username || "Guest";
     const roomId = location.state?.roomId;
-    console.log(roomId)
 
-    const [players, setPlayers] = useState([{ name: username, ready: false }]);
+    // State for username and players list
+    const [username, setUsername] = useState("");
+    const [players, setPlayers] = useState([]);
     const [readyStatus, setReadyStatus] = useState(false);
 
-    console.log(roomId);
-
+    // Load username from localStorage
     useEffect(() => {
-        // Join the room with the current player info
-        socket.emit('joinRoom', { roomId: roomId, playerInfo: { name: username } });
+        const storedUsername = localStorage.getItem("username");
+        if (storedUsername) {
+            setUsername(storedUsername);
+        }
+    }, []);
 
-        // Listen for new players joining
-        socket.on('playerJoined', (data) => {
-            setPlayers((prevPlayers) => [...prevPlayers, { name: data.playerInfo.name, ready: false }]);
-        });
-
-        // Listen for updates when a player marks as ready
-        socket.on('playerReadyStatus', (data) => {
-            setPlayers((prevPlayers) =>
-                prevPlayers.map((player) =>
-                    player.name === data.playerName ? { ...player, ready: true } : player
-                )
-            );
-        });
-
-        // Start the game when all players are ready
-        socket.on('gameStarted', () => {
-            navigate("/gamescreen", {
-                state: {
-                    initialTime: location.state.initialTime,
-                    setDifficulty: location.state.setDifficulty,
+    // Join room and set up event listeners
+    useEffect(() => {
+        if (username) {
+            // Join room with the current username
+            socket.emit('joinRoom', { roomId: roomId, username: username }, (response) => {
+                if (response.success) {
+                    // Add the current user to the player list
+                    setPlayers((prevPlayers) => [
+                        ...prevPlayers,
+                        { name: username, ready: false }
+                    ]);
                 }
             });
-        });
 
-        return () => {
-            socket.off('playerJoined');
-            socket.off('playerReadyStatus');
-            socket.off('gameStarted');
-        };
+            // Listen for new players joining
+            socket.on('playerJoined', (data) => {
+                setPlayers((prevPlayers) => [
+                    ...prevPlayers,
+                    { name: data.playerInfo.name, ready: false }
+                ]);
+            });
+
+            // Listen for updates when a player marks as ready
+            socket.on('playerReadyStatus', (data) => {
+                setPlayers((prevPlayers) =>
+                    prevPlayers.map((player) =>
+                        player.name === data.playerName ? { ...player, ready: true } : player
+                    )
+                );
+            });
+
+            // Start the game when all players are ready
+            socket.on('gameStarted', () => {
+                navigate("/gamescreen", {
+                    state: {
+                        initialTime: location.state.initialTime,
+                        setDifficulty: location.state.setDifficulty,
+                    }
+                });
+            });
+
+            // Clean up event listeners
+            return () => {
+                socket.off('playerJoined');
+                socket.off('playerReadyStatus');
+                socket.off('gameStarted');
+            };
+        }
     }, [navigate, roomId, username, location.state]);
 
     // Handle the ready button click
     const handleReady = () => {
         setReadyStatus(true);
+
+        // Update the current player's ready status in the local state
+        setPlayers((prevPlayers) =>
+            prevPlayers.map((player) =>
+                player.name === username ? { ...player, ready: true } : player
+            )
+        );
+
+        // Emit the ready event to the server
         socket.emit('playerReady', { roomId: roomId, playerName: username });
     };
 
@@ -86,14 +116,12 @@ const WaitingScreen = () => {
                     {players.length < 4 &&
                         Array.from({ length: 4 - players.length }).map((_, i) => (
                             <div key={players.length + i} className={`player${players.length + i + 1} playerS`}>
-                                Waiting...
+                                Waiting for player...
                             </div>
                         ))}
                 </div>
                 <div className='roomNready'>
-                    <RoomID
-                        roomID={roomId}
-                    />
+                    <RoomID roomID={roomId} />
                     <div className='playNback'>
                         <button
                             className="readyButton"
