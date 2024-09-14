@@ -32,7 +32,7 @@ const router = createBrowserRouter([
 		),
 	},
 	{
-		path: "/creategame",
+		path: "/creategame/:roomId",
 		element: <CreateGame />,
 	},
 	{
@@ -44,7 +44,7 @@ const router = createBrowserRouter([
 		element: <ResultPage />,
 	},
 	{
-		path: "/in-queue",
+		path: "/:roomId/in-queue",
 		element: <WaitingScreen />
 	},
 	{

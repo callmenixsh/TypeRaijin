@@ -12,6 +12,10 @@ const io = new Server(server, {
     },
 });
 
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+});
+
 const PORT = process.env.PORT || 4000;
 
 // Store room data with player details
@@ -30,8 +34,8 @@ io.on('connection', (socket) => {
     // Handle room creation when the first player joins
     socket.on('createRoom', ({ playerInfo }, callback) => {
         const roomId = generateRoomID();
+        console.log(`Generated Room ID is: ${roomId}`);
 
-        // Initialize the room data with the player's name received from the frontend
         rooms[roomId] = {
             players: [{ id: socket.id, name: playerInfo.name, ready: false }],
             readyCount: 0,
@@ -42,22 +46,33 @@ io.on('connection', (socket) => {
         console.log(`Room ${roomId} created by ${playerInfo.name}`);
     });
 
+    // Handle joining a room
+    socket.on('joinRoom', ({ roomId, username }, callback) => {
+        if (rooms[roomId]) {
+            socket.join(roomId);
+            rooms[roomId].players.push({ id: socket.id, name: username, ready: false });
+            callback({ success: true });
+            console.log(`${username} joined room ${roomId}`);
+        } else {
+            callback({ success: false, message: 'Room does not exist' });
+        }
+    });
+
     // Handle player disconnection
     socket.on('disconnect', () => {
         console.log('User Disconnected:', socket.id);
 
-        // Optional: Add logic to clean up rooms or player data if needed
-        // Example:
-        // Object.keys(rooms).forEach(roomId => {
-        //   const room = rooms[roomId];
-        //   const playerIndex = room.players.findIndex(player => player.id === socket.id);
-        //   if (playerIndex !== -1) {
-        //     room.players.splice(playerIndex, 1);
-        //     if (room.players.length === 0) {
-        //       delete rooms[roomId];
-        //     }
-        //   }
-        // });
+        // Remove player from rooms
+        for (const roomId in rooms) {
+            const room = rooms[roomId];
+            const playerIndex = room.players.findIndex(player => player.id === socket.id);
+            if (playerIndex !== -1) {
+                room.players.splice(playerIndex, 1);
+                if (room.players.length === 0) {
+                    delete rooms[roomId];
+                }
+            }
+        }
     });
 });
 

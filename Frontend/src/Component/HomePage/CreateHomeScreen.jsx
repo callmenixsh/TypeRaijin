@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from 'react-router-dom';
 import Settings from "../Sub-component/Settings";
 import "./HomeScreen.css";
 import CreateRoom from "../Sub-component/CreateRoom";
@@ -8,7 +8,12 @@ import BackButton from "../Sub-component/BackButton";
 // import { username } from './HomeScreen.jsx';
 
 export const CreateHomeScreen = () => {
+	// const username = state?.username || 'Guest';
+	const location = useLocation();
+	const roomId = location.state?.roomId || 'No Room ID';
+
 	const navigate = useNavigate();
+
 	const [username, setUsername] = useState("");
 
 	const [selectedTime, setSelectedTime] = useState('60');
@@ -21,7 +26,7 @@ export const CreateHomeScreen = () => {
 		}
 	}, []);
 
-
+	// console.log(roomId);
 	return (
 		<>
 			<div className="bodgy">
@@ -29,17 +34,19 @@ export const CreateHomeScreen = () => {
 				<div className="NameTitle">Welcome, {username}</div>
 
 				<div className="gameStart">
-					<RoomID />
+					<RoomID
+						roomID={roomId}
+					/>
 					<div className="playNback">
 						<CreateRoom
 							initialTime={selectedTime}
 							setDifficulty={selectedDiff}
+							roomID={roomId}
 						/>
 						<BackButton />
 					</div>
 				</div>
 
-				{/* <div className="menuBar"> */}
 				<Settings
 					selectedTime={selectedTime}
 					selectedDiff={selectedDiff}

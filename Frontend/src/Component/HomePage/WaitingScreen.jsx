@@ -4,47 +4,68 @@ import RoomID from './RoomID';
 import './Homescreen.css';
 import '../Sub-component/Subcomps.css';
 import BackButton from '../Sub-component/BackButton.jsx';
+import socket from "../../socket";
 
 const WaitingScreen = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
     const username = location.state?.username || "Guest";
-    const roomID = location.state?.roomID || ""; // Room ID passed from previous screen
+    const roomId = location.state?.roomId;
+    console.log(roomId)
 
-    const [players, setPlayers] = useState([username]);
+    const [players, setPlayers] = useState([{ name: username, ready: false }]);
     const [readyStatus, setReadyStatus] = useState(false);
 
-    useEffect(() => {
-        // Join the room when component mounts
-        socket.emit('joinRoom', { roomId: roomID, playerInfo: { name: username } });
+    console.log(roomId);
 
-        // Update players list when a new player joins
+    useEffect(() => {
+        // Join the room with the current player info
+        socket.emit('joinRoom', { roomId: roomId, playerInfo: { name: username } });
+
+        // Listen for new players joining
         socket.on('playerJoined', (data) => {
-            setPlayers((prevPlayers) => [...prevPlayers, data.playerInfo.name]);
+            setPlayers((prevPlayers) => [...prevPlayers, { name: data.playerInfo.name, ready: false }]);
         });
 
-        // Start the game when the server sends the gameStarted event
+        // Listen for updates when a player marks as ready
+        socket.on('playerReadyStatus', (data) => {
+            setPlayers((prevPlayers) =>
+                prevPlayers.map((player) =>
+                    player.name === data.playerName ? { ...player, ready: true } : player
+                )
+            );
+        });
+
+        // Start the game when all players are ready
         socket.on('gameStarted', () => {
             navigate("/gamescreen", {
                 state: {
                     initialTime: location.state.initialTime,
-                    setDifficulty: location.state.setDifficulty
+                    setDifficulty: location.state.setDifficulty,
                 }
             });
         });
 
-        // Cleanup event listeners on component unmount
         return () => {
             socket.off('playerJoined');
+            socket.off('playerReadyStatus');
             socket.off('gameStarted');
         };
-    }, [navigate, roomID, username, location.state]);
+    }, [navigate, roomId, username, location.state]);
 
+    // Handle the ready button click
     const handleReady = () => {
         setReadyStatus(true);
-        socket.emit('playerReady', roomID); // Notify server player is ready
+        socket.emit('playerReady', { roomId: roomId, playerName: username });
     };
+
+    // Check if all players are ready to start the game
+    useEffect(() => {
+        if (players.length > 1 && players.every((player) => player.ready)) {
+            socket.emit('startGame', roomId); // Notify the server to start the game
+        }
+    }, [players, roomId]);
 
     return (
         <div className="Wait-Body">
@@ -55,15 +76,24 @@ const WaitingScreen = () => {
             <div className='wait-status'>
                 <div className="playerList">
                     {players.map((player, index) => (
-                        <div key={index} className={`player${index + 1} playerS`}>{player}</div>
+                        <div
+                            key={index}
+                            className={`player${index + 1} playerS ${player.ready ? 'ready' : ''}`}
+                        >
+                            {player.name} {player.ready && '✔️'}
+                        </div>
                     ))}
                     {players.length < 4 &&
                         Array.from({ length: 4 - players.length }).map((_, i) => (
-                            <div key={players.length + i} className={`player${players.length + i + 1} playerS`}>Waiting...</div>
+                            <div key={players.length + i} className={`player${players.length + i + 1} playerS`}>
+                                Waiting...
+                            </div>
                         ))}
                 </div>
                 <div className='roomNready'>
-                    <RoomID />
+                    <RoomID
+                        roomID={roomId}
+                    />
                     <div className='playNback'>
                         <button
                             className="readyButton"

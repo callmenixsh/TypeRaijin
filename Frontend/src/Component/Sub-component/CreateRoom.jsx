@@ -1,29 +1,31 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+// import socket from '../../socket';
 
-const CreateRoom = ({ initialTime, setDifficulty, roomID }) => {
+const CreateRoom = ({ initialTime, setDifficulty }) => {
+
+    const location = useLocation();
+    const roomId = location.state?.roomId || 'No Room ID';
+
+    // console.log(RoomId)
+
     const navigate = useNavigate();
 
-    const handlePlayClick = () => {
-        // Emit an event to create or join the room
-        socket.emit('createRoom', roomID);
+    const handleCreateClick = () => {
 
-        // Handle server response to ensure the room is created
-        socket.once('roomCreated', () => {
-            // Navigate to the waiting screen with the room ID
-            navigate('/in-queue', {
-                state: {
-                    initialTime,
-                    setDifficulty,
-                    roomID // Pass room ID to the waiting screen
-                }
-            });
+        navigate(`/${roomId}/in-queue`, {
+            state: {
+                initialTime,
+                setDifficulty,
+                roomId,
+            }
         });
+
     };
 
     return (
-        <button className="Play" onClick={handlePlayClick} style={{ fontSize: '3vh' }}>
-            CREATE ROOM
+        <button className="Play" onClick={handleCreateClick} style={{ fontSize: '3vh' }}>
+            CREATE
         </button >
     );
 };

@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./HomeScreen.css";
-import { io } from "socket.io-client";
+import socket from "../../socket";
+import RoomID from "./RoomID";
 
 export const HomeScreen = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
-
-  const socket = io();
-
+  const [copyID, setCopyid] = useState(''); // Ensure this is named copyID, not RoomId
 
   // Generates a random username if none is set
   const generateRandomUsername = () => {
@@ -35,21 +34,38 @@ export const HomeScreen = () => {
     localStorage.setItem("username", newUsername);
   };
 
-
   // Emit the createRoom event with the username
   const onCreateGameClick = () => {
-    localStorage.removeItem("roomId");
+    localStorage.removeItem("roomId"); // Ensure it's removed first
     console.log("Username:", username);
 
+    // Check if socket is connected before emitting
+    if (!socket.connected) {
+      console.error("Socket is not connected");
+      return;
+    }
+
     // Emit the createRoom event with player info
-    socket.emit("createRoom", { playerInfo: { name: username } }, (response) => {
-      if (response.roomId) {
-        console.log(`Room created with ID: ${response.roomId}`);
-        navigate(`/creategame`, { state: { username, roomId: response.roomId } });
-      } else {
-        console.error("Failed to create room");
+    socket.emit(
+      "createRoom",
+      { playerInfo: { name: username } },
+      (response) => {
+        if (response.roomId) {
+          console.log(`Room created with ID: ${response.roomId}`);
+          localStorage.setItem("roomId", response.roomId); // Store the room ID
+          // console.log(response.roomId);
+
+          setCopyid(response.roomId);
+          console.log(copyID);
+
+          navigate(`/creategame/${response.roomId}`, {
+            state: { username, roomId: response.roomId },
+          });
+        } else {
+          console.error("Failed to create room");
+        }
       }
-    });
+    );
   };
 
   // Navigate to join game screen with username
