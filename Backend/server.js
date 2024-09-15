@@ -11,8 +11,11 @@ const io = new Server(server, {
 	},
 });
 
+
+
+
 app.get("/", (req, res) => {
-	res.send("Hello World!");
+	res.send("Sayonara Onii chan");
 });
 
 const PORT = process.env.PORT || 4000;
@@ -28,6 +31,75 @@ const generateRoomID = () => {
 		() => alphabet[Math.floor(Math.random() * alphabet.length)]
 	).join("");
 };
+
+let wordsList = [];
+let usedWords = new Set();
+
+const fetchRandomWords = async () => {
+	try {
+		while (wordsList.length < 200) {
+			const response = await fetch("https://random-word-api.herokuapp.com/word?number=100");
+			const data = await response.json();
+
+			// Filter out words longer than 10 characters
+			const filteredWords = data.filter((word) => word.length <= 10);
+
+			wordsList = [...wordsList, ...filteredWords];
+			if (wordsList.length > 200) {
+				wordsList = wordsList.slice(0, 200);
+			}
+		}
+		return wordsList;
+	} catch (error) {
+		console.error("Error fetching words:", error);
+		return [];
+	}
+};
+
+const getUniqueWord = () => {
+	if (wordsList.length === 0) {
+		console.error("No words left to select.");
+		return null;
+	}
+
+	let randomWord = null;
+	while (randomWord === null || usedWords.has(randomWord)) {
+		if (wordsList.length === 0) {
+			return null;
+		}
+		randomWord = wordsList[Math.floor(Math.random() * wordsList.length)];
+	}
+
+	// Add the word to usedWords and remove it from wordsList
+	usedWords.add(randomWord);
+	wordsList = wordsList.filter((word) => word !== randomWord);
+
+	return randomWord;
+};
+
+
+
+
+// const getUniqueWord = () => {
+// 	if (wordsList.current.length === 0) {
+// 		fetchRandomWords();
+// 		return null;
+// 	}
+
+// 	let randomWord = null;
+// 	while (randomWord === null || usedWords.current.has(randomWord)) {
+// 		if (wordsList.current.length === 0) {
+// 			return null;
+// 		}
+// 		randomWord =
+// 			wordsList.current[Math.floor(Math.random() * wordsList.current.length)];
+// 	}
+
+// 	usedWords.current.add(randomWord);
+// 	wordsList.current = wordsList.current.filter((word) => word !== randomWord);
+// 	return randomWord;
+// };
+
 
 // Socket.io connection
 io.on("connection", (socket) => {
@@ -62,10 +134,8 @@ io.on("connection", (socket) => {
 				});
 			}
 
-			// Emit the updated player list to all players in the room
 			io.in(roomId).emit("playerJoined", { players: rooms[roomId].players });
 
-			// Confirm join for the client
 			callback({ success: true, players: rooms[roomId].players });
 			console.log(`${username} joined room ${roomId}`);
 		} else {
@@ -131,7 +201,41 @@ io.on("connection", (socket) => {
 			}
 		}
 	});
+
+
+	// socket.on("gamestart", ({ roomId }) => {
+	// 	console.log(`Game started in ${roomId}`);
+	// 	console.log(`Players in room ${roomId}:`, rooms[roomId].players);
+
+	// })
+	socket.on("gamestart", async ({ roomId }) => {
+		console.log(`Game started in room ${roomId}`);
+
+		// Fetch words if the word list hasn't reached 100 words yet
+		if (wordsList.length < 200) {
+			await fetchRandomWords();
+		}
+
+		console.log("Words fetched and ready:", wordsList.length);
+
+		// Emit the words to clients in the room
+		io.to(roomId).emit("sendWords", { words: wordsList });
+	});
+
+	// Handle word requests from clients during gameplay
+	socket.on("requestWord", () => {
+		const uniqueWord = getUniqueWord();
+		if (uniqueWord) {
+			socket.emit("receiveWord", { word: uniqueWord });
+		} else {
+			socket.emit("noMoreWords");
+		}
+	});
+
+
 });
+
+
 
 server.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`);

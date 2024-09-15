@@ -9,6 +9,7 @@ import logoIcon from '../../assets/logo.png';
 
 const GameScreen = () => {
     const location = useLocation();
+    const roomID = location.state?.roomId;
     const initialTime = location.state?.initialTime || 60;
 
     const setDifficulty = location.state?.setDifficulty;
@@ -97,6 +98,7 @@ const GameScreen = () => {
                     currentInput={currentInput}
                     focusedWord={focusedWord}
                     gameDifficulty={gameDifficulty}
+                    roomID={roomID}
                 />
                 <div className="tabList">
                     <div className="titleBar">

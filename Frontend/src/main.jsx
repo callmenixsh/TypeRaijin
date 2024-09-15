@@ -19,7 +19,7 @@ const router = createBrowserRouter([
 		errorElement: <div>404 Not Found</div>,
 	},
 	{
-		path: "/gamescreen",
+		path: "/:roomId",
 		element: <GameScreen />,
 	},
 	{

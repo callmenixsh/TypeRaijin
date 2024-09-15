@@ -49,8 +49,9 @@ const WaitingScreen = () => {
 
         // Listen for game start signal
         socket.on('gameStarted', () => {
-            navigate("/gamescreen", {
+            navigate(`/${roomId}`, {
                 state: {
+                    roomId: roomId,
                     initialTime: location.state.initialTime,
                     setDifficulty: location.state.setDifficulty,
                 }
