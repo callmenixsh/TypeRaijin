@@ -3,19 +3,20 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import RoomID from './RoomID';
 import './Homescreen.css';
 import '../Sub-component/Subcomps.css';
-import BackButton from '../Sub-component/BackButton.jsx';
+// import BackButton from '../Sub-component/BackButton.jsx';
 import socket from "../../socket";
+import backIcon from '../../assets/back.png'
+
 
 const WaitingScreen = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
     const roomId = location.state?.roomId;
-
-    // State for username and players list
     const [username, setUsername] = useState("");
     const [players, setPlayers] = useState([]);
     const [readyStatus, setReadyStatus] = useState(false);
+    const [joined, setJoined] = useState(false);
 
     // Load username from localStorage
     useEffect(() => {
@@ -25,77 +26,64 @@ const WaitingScreen = () => {
         }
     }, []);
 
-    // Join room and set up event listeners
-    useEffect(() => {
-        if (username) {
-            // Join room with the current username
-            socket.emit('joinRoom', { roomId: roomId, username: username }, (response) => {
-                if (response.success) {
-                    // Add the current user to the player list
-                    setPlayers((prevPlayers) => [
-                        ...prevPlayers,
-                        { name: username, ready: false }
-                    ]);
+    // Join room and listen for updates
+    // useEffect(() => {
+    if (username && roomId && !joined) {
+        // Emit event to join room
+        socket.emit('joinRoom', { roomId, username }, (response) => {
+            if (response.success) {
+                setPlayers(response.players);
+                setJoined(true);
+            }
+        });
+
+        // Listen for other players joining
+        socket.on('playerJoined', (data) => {
+            setPlayers(data.players);
+        });
+
+        // Listen for updates when a player marks ready
+        socket.on('playerReadyStatus', (data) => {
+            setPlayers(data.players);
+        });
+
+        // Listen for game start signal
+        socket.on('gameStarted', () => {
+            navigate("/gamescreen", {
+                state: {
+                    initialTime: location.state.initialTime,
+                    setDifficulty: location.state.setDifficulty,
                 }
             });
+        });
 
-            // Listen for new players joining
-            socket.on('playerJoined', (data) => {
-                setPlayers((prevPlayers) => [
-                    ...prevPlayers,
-                    { name: data.playerInfo.name, ready: false }
-                ]);
-            });
+        return () => {
+            socket.off('playerJoined');
+            socket.off('playerReadyStatus');
+            socket.off('gameStarted');
+        };
+    }
+    // }, [username, roomId, joined, navigate, location.state]);
 
-            // Listen for updates when a player marks as ready
-            socket.on('playerReadyStatus', (data) => {
-                setPlayers((prevPlayers) =>
-                    prevPlayers.map((player) =>
-                        player.name === data.playerName ? { ...player, ready: true } : player
-                    )
-                );
-            });
+    // Handle leaving the room
+    const handleLeaveRoom = () => {
+        // if (roomId && username) {
+        // Emit event to leave the room
 
-            // Start the game when all players are ready
-            socket.on('gameStarted', () => {
-                navigate("/gamescreen", {
-                    state: {
-                        initialTime: location.state.initialTime,
-                        setDifficulty: location.state.setDifficulty,
-                    }
-                });
-            });
+        socket.emit('leaveRoom', { roomId, username });
 
-            // Clean up event listeners
-            return () => {
-                socket.off('playerJoined');
-                socket.off('playerReadyStatus');
-                socket.off('gameStarted');
-            };
-        }
-    }, [navigate, roomId, username, location.state]);
-
-    // Handle the ready button click
-    const handleReady = () => {
-        setReadyStatus(true);
-
-        // Update the current player's ready status in the local state
-        setPlayers((prevPlayers) =>
-            prevPlayers.map((player) =>
-                player.name === username ? { ...player, ready: true } : player
-            )
-        );
-
-        // Emit the ready event to the server
-        socket.emit('playerReady', { roomId: roomId, playerName: username });
+        navigate(-1); // Go back to the previous page
+        // }
+        socket.on('playerJoined', (data) => {
+            setPlayers(data.players);
+        });
     };
 
-    // Check if all players are ready to start the game
-    useEffect(() => {
-        if (players.length > 1 && players.every((player) => player.ready)) {
-            socket.emit('startGame', roomId); // Notify the server to start the game
-        }
-    }, [players, roomId]);
+    // Handle ready status
+    const handleReady = () => {
+        setReadyStatus(true);
+        socket.emit('playerReady', { roomId, playerName: username });
+    };
 
     return (
         <div className="Wait-Body">
@@ -130,7 +118,19 @@ const WaitingScreen = () => {
                         >
                             {readyStatus ? 'Waiting for others...' : 'Ready'}
                         </button>
-                        <BackButton />
+                        {/* Back button sends the player out of the room */}
+
+                        <div className="prevPageButton"
+                            onClick={handleLeaveRoom}>
+                            <img src={backIcon} alt="Back Icon" />
+
+                        </div>
+                        {/* <button
+
+                        >
+                            Back
+                        </button> */}
+                        {/* <BackButton onClick={handleLeaveRoom} /> */}
                     </div>
                 </div>
             </div>

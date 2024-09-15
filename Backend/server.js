@@ -1,4 +1,3 @@
-// server.js - Backend logic
 import express from "express";
 import http from "http";
 import { Server } from "socket.io";
@@ -34,7 +33,7 @@ const generateRoomID = () => {
 io.on("connection", (socket) => {
 	console.log("A user connected:", socket.id);
 
-	// Handle room creation when the first player joins
+	// Handle room creation
 	socket.on("createRoom", ({ playerInfo }, callback) => {
 		const roomId = generateRoomID();
 		console.log(`Generated Room ID is: ${roomId}`);
@@ -45,7 +44,7 @@ io.on("connection", (socket) => {
 		};
 
 		socket.join(roomId);
-		callback({ roomId }); // Send the room ID back to the frontend
+		callback({ roomId });
 		console.log(`Room ${roomId} created by ${playerInfo.name}`);
 	});
 
@@ -53,32 +52,79 @@ io.on("connection", (socket) => {
 	socket.on("joinRoom", ({ roomId, username }, callback) => {
 		if (rooms[roomId]) {
 			socket.join(roomId);
-			rooms[roomId].players.push({
-				id: socket.id,
-				name: username,
-				ready: false,
-			});
-			callback({ success: true });
+
+			const existingPlayer = rooms[roomId].players.find(p => p.id === socket.id);
+			if (!existingPlayer) {
+				rooms[roomId].players.push({
+					id: socket.id,
+					name: username,
+					ready: false,
+				});
+			}
+
+			// Emit the updated player list to all players in the room
+			io.in(roomId).emit("playerJoined", { players: rooms[roomId].players });
+
+			// Confirm join for the client
+			callback({ success: true, players: rooms[roomId].players });
 			console.log(`${username} joined room ${roomId}`);
 		} else {
-                if (typeof callback === "function") {
-                    callback({ success: false });
+			callback({ success: false });
+		}
+	});
+
+	// Handle when a player marks as ready
+	socket.on("playerReady", ({ roomId, playerName }) => {
+		if (rooms[roomId]) {
+			const player = rooms[roomId].players.find((p) => p.name === playerName);
+			if (player) {
+				player.ready = true;
+			}
+			io.to(roomId).emit("playerReadyStatus", { players: rooms[roomId].players });
+
+			// Check if all players are ready
+			const allReady = rooms[roomId].players.every((p) => p.ready);
+			if (allReady) {
+				io.to(roomId).emit("gameStarted");
 			}
 		}
 	});
 
+	// Handle leaving the room
+	socket.on('leaveRoom', ({ roomId, username }) => {
+		const room = rooms[roomId];
+		if (room) {
+			// Remove the player from the room
+			room.players = room.players.filter(player => player.name !== username);
+
+			// Emit updated player list to all clients in the room
+			io.in(roomId).emit('playerJoined', { players: room.players });
+
+			// Leave the socket room
+			socket.leave(roomId);
+
+			// If no players are left in the room, delete the room
+			if (room.players.length === 0) {
+				delete rooms[roomId];
+			}
+
+			console.log(`${username} has left room ${roomId}`);
+		}
+	});
+
 	// Handle player disconnection
-	socket.on("disconnect", () => {
-		console.log("User Disconnected:", socket.id);
+	socket.on("disconnect", async () => {
+		console.log("User disconnected:", socket.id);
 
 		// Remove player from rooms
 		for (const roomId in rooms) {
 			const room = rooms[roomId];
-			const playerIndex = room.players.findIndex(
-				(player) => player.id === socket.id
-			);
+			const playerIndex = room.players.findIndex((player) => player.id === socket.id);
 			if (playerIndex !== -1) {
 				room.players.splice(playerIndex, 1);
+				io.in(roomId).emit('playerJoined', { players: room.players });
+
+				// Delete room if empty
 				if (room.players.length === 0) {
 					delete rooms[roomId];
 				}
@@ -88,5 +134,5 @@ io.on("connection", (socket) => {
 });
 
 server.listen(PORT, () => {
-	console.log(`Server is running on port ${PORT}`);
+	console.log(`Server running on port ${PORT}`);
 });
