@@ -1,10 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import socket from "../../socket";
 
-const Leaderboard = () => {
-	const yellow = 'Yellow';
-	const red = 'Red';
-	const purple = 'Purple';
-	const green = 'Green';
+const Leaderboard = ({ roomId }) => {
+	const [players, setPlayers] = useState([]);
+
+	useEffect(() => {
+		// console.log(roomId);
+		if (!roomId) return;
+		socket.emit("requestPlayerList", { roomId });
+		socket.on("updatePlayerList", ({ playerList }) => {
+			setPlayers(playerList);
+		});
+
+		socket.on("quitUpdate", ({ playerList }) => {
+			setPlayers(playerList);
+			console.log("Received quitUpdate:", playerList);
+		});
+
+		return () => {
+			socket.off("updatePlayerList");
+			socket.off("quitUpdate");
+		};
+	}, [roomId]);
 
 	return (
 		<>
@@ -12,10 +29,12 @@ const Leaderboard = () => {
 				<div className="leaderLabel">LEADERBOARD</div>
 
 				<div className="playerList">
-					<div className="player1 playerT">{yellow}</div>
-					<div className="player2 playerS">{red}</div>
-					<div className="player3 playerS">{purple}</div>
-					<div className="player4 playerS">{green}</div>
+					{players.map((player, index) => (
+						<div className={`player${index + 1} playerS`} key={index}>
+							<div className="playerName">{player.name}</div>
+							<div className="score">{player.score}</div>
+						</div>
+					))}
 				</div>
 			</div>
 		</>

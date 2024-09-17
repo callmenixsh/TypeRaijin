@@ -2,36 +2,32 @@ import React, { useState, useEffect, useRef } from "react";
 import "./WordPanel.css";
 import socket from "../../socket";
 
-const WordPanel = ({ showCountdown, onUpdateWords, currentInput, focusedWord, gameDifficulty, roomID }) => {
-    const [words, setWords] = useState([]); // List of words currently on screen
-    const [highlightedWord, setHighlightedWord] = useState(null); // Tracks the highlighted word for typing
-    const lastYPos = useRef(null); // Keeps track of the last Y position to avoid overlapping
-    const usedWords = useRef(new Set()); // Tracks used words to ensure uniqueness
-    const wordsList = useRef([]); // List of words available for spawning
-    const wordIndex = useRef(0); // Index to keep track of the next word to display
+const WordPanel = ({ showCountdown, onUpdateWords, currentInput, focusedWord, gameDifficulty, roomID, setCurrentInput, setFocusedWord }) => {
+    const [words, setWords] = useState([]);
+    const [highlightedWord, setHighlightedWord] = useState(null); 
+    const lastYPos = useRef(null);
+    const wordsList = useRef([]); 
+    const wordIndex = useRef(0);
 
-    // Emit the 'gamestart' event to server with the roomId
     useEffect(() => {
         if (roomID) {
             socket.emit("gamestart", { roomId: roomID });
         }
     }, [roomID]);
 
-    // Listen for words sent by the server
     useEffect(() => {
         const handleSendWords = ({ words }) => {
             console.log("Words received:", words);
-            wordsList.current = words; // Store received words for future use
+            wordsList.current = words;
         };
 
         socket.on("sendWords", handleSendWords);
 
         return () => {
-            socket.off("sendWords", handleSendWords); // Cleanup listener
+            socket.off("sendWords", handleSendWords);
         };
     }, []);
 
-    // Error handling and additional socket listeners
     useEffect(() => {
         socket.on("receiveWord", ({ word }) => {
             console.log("Received a unique word:", word);
@@ -47,33 +43,31 @@ const WordPanel = ({ showCountdown, onUpdateWords, currentInput, focusedWord, ga
         };
     }, []);
 
-    // Handle countdown and word spawning
     useEffect(() => {
         if (!showCountdown) {
             const wordInterval = setInterval(() => {
-                const nextWord = getNextWord(); // Get the next word in order
+                const nextWord = getNextWord();
                 if (!nextWord) return;
 
-                const randomY = getRandomYPosition(); // Get random Y position
+                const randomY = getRandomYPosition();
 
-                // Add new word to the list
                 setWords((prevWords) => [
                     ...prevWords,
                     {
                         text: nextWord,
                         id: Date.now(),
                         yPos: randomY,
-                        xPos: 100, // Start at the right side of the screen
+                        xPos: 100, 
                         visible: true,
                     },
                 ]);
-            }, gameDifficulty); // Difficulty controls the speed of spawning words
+            }, gameDifficulty);
 
-            return () => clearInterval(wordInterval); // Cleanup the interval
+            return () => clearInterval(wordInterval);
         }
     }, [showCountdown, gameDifficulty]);
 
-    // Move words from right to left
+
     useEffect(() => {
         if (showCountdown) return;
 
@@ -83,9 +77,9 @@ const WordPanel = ({ showCountdown, onUpdateWords, currentInput, focusedWord, ga
             setWords((prevWords) =>
                 prevWords.map((word) => ({
                     ...word,
-                    xPos: word.xPos - 0.1899, // Move the word to the left
-                    visible: word.xPos > 0, // Only keep words visible if they are on screen
-                }))
+                    xPos: word.xPos - 0.1899,
+                    visible: word.xPos > 0, 
+                })).filter((word) => word.visible) 
             );
 
             animationFrameId = requestAnimationFrame(moveWords);
@@ -93,15 +87,13 @@ const WordPanel = ({ showCountdown, onUpdateWords, currentInput, focusedWord, ga
 
         animationFrameId = requestAnimationFrame(moveWords);
 
-        return () => cancelAnimationFrame(animationFrameId); // Cleanup animation frame
+        return () => cancelAnimationFrame(animationFrameId); 
     }, [words, showCountdown]);
 
-    // Update parent component with the current list of words
     useEffect(() => {
         onUpdateWords(words);
     }, [words, onUpdateWords]);
 
-    // Highlight the focused word when the user types
     useEffect(() => {
         if (focusedWord && currentInput === focusedWord.text) {
             setHighlightedWord(focusedWord);
@@ -113,7 +105,17 @@ const WordPanel = ({ showCountdown, onUpdateWords, currentInput, focusedWord, ga
         }
     }, [currentInput, focusedWord]);
 
-    // Utility to get a random Y position for spawning words
+    useEffect(() => {
+        if (focusedWord && currentInput === focusedWord.text) {
+            setWords((prevWords) =>
+                prevWords.filter((word) => word.id !== focusedWord.id) 
+            );
+            setFocusedWord(null);
+            setCurrentInput('');
+        }
+    }, [currentInput, focusedWord, setCurrentInput, setFocusedWord]);
+
+
     const NUM_Y_POSITIONS = 6;
     const yPositions = Array.from({ length: NUM_Y_POSITIONS }, (_, i) => (i + 1) * (80 / NUM_Y_POSITIONS - 2));
 
@@ -123,15 +125,14 @@ const WordPanel = ({ showCountdown, onUpdateWords, currentInput, focusedWord, ga
             newYPos = yPositions[Math.floor(Math.random() * yPositions.length)];
         } while (newYPos === lastYPos.current);
 
-        lastYPos.current = newYPos; // Update the last Y position to avoid overlap
+        lastYPos.current = newYPos; 
         return newYPos;
     };
 
-    // Utility to get the next word in order from the list
     const getNextWord = () => {
-        if (wordIndex.current >= wordsList.current.length) return null; // No words left
+        if (wordIndex.current >= wordsList.current.length) return null; 
         const nextWord = wordsList.current[wordIndex.current];
-        wordIndex.current += 1; // Move to the next word
+        wordIndex.current += 1;
         return nextWord;
     };
 
@@ -140,7 +141,7 @@ const WordPanel = ({ showCountdown, onUpdateWords, currentInput, focusedWord, ga
             {words.map((w) => (
                 <div
                     key={w.id}
-                    className={`word ${w.visible ? "" : "invisible"}`}
+                    className={`word ${!w.visible ? "invisible" : ""}`}
                     style={{ top: `${w.yPos}%`, left: `${w.xPos}%` }}
                 >
                     <p>

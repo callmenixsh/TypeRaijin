@@ -67,6 +67,26 @@ const GameScreen = () => {
             }
         }
     };
+    useEffect(() => {
+        const handleBeforeUnload = (event) => {
+            sessionStorage.setItem('triedToReload', 'true');
+            event.preventDefault();
+            event.returnValue = '';
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (sessionStorage.getItem('triedToReload') === 'true') {
+            sessionStorage.removeItem('triedToReload');
+            navigate('/');
+        }
+    }, [navigate]);
 
     useEffect(() => {
         if (showCountdown) return;
@@ -105,7 +125,8 @@ const GameScreen = () => {
                         <img src={logoIcon} alt="logo" />TypeRAIJIN
                     </div>
                     <div className="timer">{formatTime(timeLeft)}</div>
-                    <Leaderboard />
+                    <Leaderboard 
+                    roomId={roomID}/>
                 </div>
             </div>
             <input

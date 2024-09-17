@@ -27,7 +27,6 @@ export const JoinHomeScreen = () => {
 			return;
 		}
 
-		// Emit join room event to the server
 		socket.emit("joinRoom", { roomId: inputRoomId, username: username }, (response) => {
 			if (response.success) {
 				navigate(`/${inputRoomId}/in-queue`, {
@@ -41,7 +40,7 @@ export const JoinHomeScreen = () => {
 
 	return (
 		<div className="bodgy">
-			<div className="info">{/*info-png here*/}</div>
+			{/* <div className="info">{}</div> */}
 			<div className="NameTitle">Welcome, {username}</div>
 
 			<div className="gameStart">

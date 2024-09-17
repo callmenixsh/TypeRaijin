@@ -1,16 +1,29 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const Quit = () => {
+const Quit = ({ roomId }) => {
+	const navigate = useNavigate();
 
-  const navigate = useNavigate();
-  const onQuitClick = () => {
-    navigate('/quitconfirm');
-  };
+	const [username, setUsername] = useState("");
+	useEffect(() => {
+		const storedUsername = localStorage.getItem("username");
+		if (storedUsername) {
+			setUsername(storedUsername);
+		}
+	}, []);
 
-  return (
-    <div className="quits" onClick={onQuitClick}>QUIT</div>
-  )
-}
+	const onQuitClick = () => {
+		navigate("/quitconfirm", {
+			state: { roomId, username },
+		});
+	};
 
-export default Quit
+	return (
+		<div className="quits" onClick={onQuitClick}>
+			QUIT
+		</div>
+	);
+};
+
+export default Quit;

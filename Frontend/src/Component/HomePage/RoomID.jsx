@@ -1,5 +1,6 @@
 import React from 'react';
 import copyIcon from '../../assets/copy.png';
+import './HomeScreen.css';
 
 const RoomID = ({ roomID }) => {
 

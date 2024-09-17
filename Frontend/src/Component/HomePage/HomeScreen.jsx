@@ -7,15 +7,13 @@ import socket from "../../socket";
 export const HomeScreen = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
-  const [copyID, setCopyid] = useState(''); // Ensure this is named copyID, not RoomId
+  const [copyID, setCopyid] = useState(''); 
 
-  // Generates a random username if none is set
   const generateRandomUsername = () => {
     const randomNumber = Math.floor(1000 + Math.random() * 9000);
     return `Guest${randomNumber}`;
   };
 
-  // Set the username on initial load
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     if (storedUsername) {
@@ -27,32 +25,28 @@ export const HomeScreen = () => {
     }
   }, []);
 
-  // Handle input change and store the username in localStorage
   const handleUsernameChange = (e) => {
     const newUsername = e.target.value;
     setUsername(newUsername);
     localStorage.setItem("username", newUsername);
   };
 
-  // Emit the createRoom event with the username
   const onCreateGameClick = () => {
-    localStorage.removeItem("roomId"); // Ensure it's removed first
+    localStorage.removeItem("roomId");
     console.log("Username:", username);
 
-    // Check if socket is connected before emitting
     if (!socket.connected) {
       console.error("Socket is not connected");
       return;
     }
 
-    // Emit the createRoom event with player info
     socket.emit(
       "createRoom",
       { playerInfo: { name: username } },
       (response) => {
         if (response.roomId) {
           console.log(`Room created with ID: ${response.roomId}`);
-          localStorage.setItem("roomId", response.roomId); // Store the room ID
+          localStorage.setItem("roomId", response.roomId);
           // console.log(response.roomId);
 
           setCopyid(response.roomId);
@@ -68,7 +62,6 @@ export const HomeScreen = () => {
     );
   };
 
-  // Navigate to join game screen with username
   const onJoinGameClick = () => {
     console.log("Username:", username);
     navigate("/joingame", { state: { username } });
