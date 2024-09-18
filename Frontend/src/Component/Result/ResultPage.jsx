@@ -72,9 +72,11 @@ const ResultPage = () => {
     <div id="results" className="resultbody">
       <div className="ResultContainer">
         <div className="Rank-Panel">
-          <div className="Time-up">TIME'S UP!</div>
+          {/* <div className="Time-up">TIME'S UP!</div> */}
           {/* Pass sorted leaderboard data here */}
-          <Leaderboard roomId={roomID} leaderboardData={leaderboard} />
+          <div className="leaderbox">
+            <Leaderboard roomId={roomID} leaderboardData={leaderboard} />
+          </div>
           <div className="resultOptions">
             <div
               className="result-btns"

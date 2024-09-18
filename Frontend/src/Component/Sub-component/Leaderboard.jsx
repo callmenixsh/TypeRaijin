@@ -30,7 +30,7 @@ const Leaderboard = ({ roomId }) => {
 
 	return (
 		<div className="leaderBoard">
-			<div className="leaderLabel">LEADERBOARD</div>
+			<p className="leaderLabel">LEADERBOARD</p>
 			<div className="playerList">
 				{sortedPlayers.map((player, index) => (
 					<div className={`player${index + 1} playerS`} key={player.id}>

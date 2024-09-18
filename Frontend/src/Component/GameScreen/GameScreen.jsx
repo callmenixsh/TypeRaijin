@@ -164,12 +164,18 @@ const GameScreen = () => {
                     roomID={roomID}
                 />
                 <div className="tabList">
-                    <div className="titleBar">
-                        <img src={logoIcon} alt="logo" />
-                        TypeRAIJIN
+                    <div className="notleaderbord">
+
+                        <div className="titleBar">
+                            <img src={logoIcon} alt="logo" />
+                            TypeRAIJIN
+                        </div>
+                        <div className="timer">{formatTime(timeLeft)}</div>
                     </div>
-                    <div className="timer">{formatTime(timeLeft)}</div>
-                    <Leaderboard roomId={roomID} />
+                    <div className="yesleaderbord">
+
+                        <Leaderboard roomId={roomID} />
+                    </div>
                 </div>
             </div>
             <input

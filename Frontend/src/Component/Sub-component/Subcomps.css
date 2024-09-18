@@ -58,18 +58,18 @@
 	padding: 1.7vh;
 	margin: 4vh;
 	width: 75%;
-	height: 33vh;
+	/* height: 33vh; */
 }
 
 .leaderLabel {
-	color: rgba(245, 246, 246, 0.726);
+	color: rgb(0, 0, 0);
 	font-size: 3.4vh;
 	font-weight: 500;
 	letter-spacing: 0.2em;
 	display: flex;
 	justify-content: center;
 	width: auto;
-	border-bottom: .3vh solid rgb(238, 238, 238);
+	border-bottom: .3vh solid rgba(7, 7, 7, 0.46);
 	margin: 0px 3vh;
 	padding: 1vh 0px;
 }
@@ -91,22 +91,6 @@
 	background: rgba(47, 90, 84, 0.493);
 	border-radius: 14.1128px 50px 50px 14.11px;
 }
-
-/* .player1 {
-	border: .3vh solid rgba(198, 161, 27, 0.4);
-}
-
-.player2 {
-	border: .3vh solid rgba(202, 62, 62, 0.4);
-}
-
-.player3 {
-	border: .3vh solid rgba(99, 38, 115, 0.4);
-}
-
-.player4 {
-	border: .3vh solid rgba(0, 126, 63, 0.4);
-} */
 
 /*  back page button  */
 .prevPageButton {

@@ -85,8 +85,10 @@
 
 .resultOptions {
     display: flex;
-    justify-content: space-around;
-    gap: 7vh;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 10vh;
+    padding-right: 3vh;
 }
 
 .result-btns {
@@ -101,4 +103,11 @@
     padding: 1vh 2vh;
     flex-direction: column;
     box-shadow: 0 0 .4vh rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+}
+
+.leaderbox p {
+    color: rgb(255, 255, 255);
+    border-bottom: solid 2px rgba(255, 255, 255, 0.744);
+    padding: 2vh 2.7vh 2vh 3vh;
 }
