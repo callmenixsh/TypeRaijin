@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import './GameScreen.css';
-import Quits from '../Sub-component/Quit';
-import Leaderboard from '../Sub-component/Leaderboard';
-import CountdownOverlay from './CountdownOverlay';
-import WordPanel from './WordPanel';
-import logoIcon from '../../assets/logo.png';
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import "./GameScreen.css";
+import Quits from "../Sub-component/Quit";
+import Leaderboard from "../Sub-component/Leaderboard";
+import CountdownOverlay from "./CountdownOverlay";
+import WordPanel from "./WordPanel";
+import logoIcon from "../../assets/logo.png";
+import socket from "../../socket"; // Make sure to import socket
 
 const GameScreen = () => {
     const location = useLocation();
@@ -17,11 +18,19 @@ const GameScreen = () => {
 
     const [timeLeft, setTimeLeft] = useState(initialTime);
     const [showCountdown, setShowCountdown] = useState(true);
-    const [currentInput, setCurrentInput] = useState('');
+    const [currentInput, setCurrentInput] = useState("");
     const [currentWords, setCurrentWords] = useState([]);
     const [focusedWord, setFocusedWord] = useState(null);
+    const [score, setScore] = useState(0); // Track score for the player
     const navigate = useNavigate();
 
+    const inputRef = useRef(null);
+
+    useEffect(() => {
+        if (inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, []);
 
     const handleCountdownComplete = () => {
         setShowCountdown(false);
@@ -43,13 +52,18 @@ const GameScreen = () => {
             setFocusedWord(matchingWord);
 
             if (inputValue === matchingWord.text) {
-                setCurrentWords((prevWords) =>
-                    prevWords.map((word) =>
-                        word.id === matchingWord.id ? { ...word, visible: false } : word
-                    )
+                setCurrentWords(
+                    (prevWords) => prevWords.filter((word) => word.id !== matchingWord.id) // Remove word from state after it's typed
                 );
                 setFocusedWord(null);
-                setCurrentInput('');
+                setCurrentInput("");
+
+                // Increment score based on word length
+                const newScore = score + matchingWord.text.length;
+                setScore(newScore);
+
+                // Emit score update to the server
+                socket.emit("updateScore", { roomId: roomID, score: newScore });
             }
         }
     };
@@ -63,28 +77,36 @@ const GameScreen = () => {
             );
             if (!wordStillVisible) {
                 setFocusedWord(null);
-                setCurrentInput('');
+                setCurrentInput("");
             }
         }
     };
+
+    useEffect(() => {
+        if (timeLeft === 0) {
+            socket.emit('endGame', { roomId: roomID });
+        }
+    }, [timeLeft, roomID]);
+
+
     useEffect(() => {
         const handleBeforeUnload = (event) => {
-            sessionStorage.setItem('triedToReload', 'true');
+            sessionStorage.setItem("triedToReload", "true");
             event.preventDefault();
-            event.returnValue = '';
+            event.returnValue = "";
         };
 
-        window.addEventListener('beforeunload', handleBeforeUnload);
+        window.addEventListener("beforeunload", handleBeforeUnload);
 
         return () => {
-            window.removeEventListener('beforeunload', handleBeforeUnload);
+            window.removeEventListener("beforeunload", handleBeforeUnload);
         };
     }, []);
 
     useEffect(() => {
-        if (sessionStorage.getItem('triedToReload') === 'true') {
-            sessionStorage.removeItem('triedToReload');
-            navigate('/');
+        if (sessionStorage.getItem("triedToReload") === "true") {
+            sessionStorage.removeItem("triedToReload");
+            navigate("/");
         }
     }, [navigate]);
 
@@ -98,20 +120,41 @@ const GameScreen = () => {
 
             return () => clearTimeout(timerId);
         } else {
-            navigate('/result');
+            navigate("/result", {
+                state: { roomID },
+            });
         }
     }, [timeLeft, showCountdown, navigate]);
 
     const formatTime = (seconds) => {
         const minutes = Math.floor(seconds / 60);
         const remainingSeconds = seconds % 60;
-        return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+        return `${minutes.toString().padStart(2, "0")}:${remainingSeconds
+            .toString()
+            .padStart(2, "0")}`;
     };
+
+
+    useEffect(() => {
+        if (timeLeft === 0) {
+            socket.emit("requestFinalLeaderboard", { roomID }, (leaderboardData, playerStats) => {
+                navigate("/result", {
+                    state: {
+                        roomID,
+                        leaderboardData,
+                        playerStats
+                    }
+                });
+            });
+        }
+    }, [timeLeft, navigate, roomID]);
 
     return (
         <div className="boddy">
-            {showCountdown && <CountdownOverlay onComplete={handleCountdownComplete} />}
-            <div className={`gameUI ${showCountdown ? 'blur' : ''}`}>
+            {showCountdown && (
+                <CountdownOverlay onComplete={handleCountdownComplete} />
+            )}
+            <div className={`gameUI ${showCountdown ? "blur" : ""}`}>
                 <WordPanel
                     showCountdown={showCountdown}
                     onUpdateWords={handleUpdateWords}
@@ -122,23 +165,24 @@ const GameScreen = () => {
                 />
                 <div className="tabList">
                     <div className="titleBar">
-                        <img src={logoIcon} alt="logo" />TypeRAIJIN
+                        <img src={logoIcon} alt="logo" />
+                        TypeRAIJIN
                     </div>
                     <div className="timer">{formatTime(timeLeft)}</div>
-                    <Leaderboard 
-                    roomId={roomID}/>
+                    <Leaderboard roomId={roomID} />
                 </div>
             </div>
             <input
+                ref={inputRef}
                 className="typingPanel"
                 spellCheck="false"
                 maxLength="10"
                 value={currentInput}
                 onChange={handleInputChange}
             />
-            <div className="menuBar">
+            {/* <div className="menuBar">
                 <Quits />
-            </div>
+            </div> */}
         </div>
     );
 };

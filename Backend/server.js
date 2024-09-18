@@ -11,16 +11,15 @@ const io = new Server(server, {
 	},
 });
 
+app.use(cors());
 app.get("/", (req, res) => {
 	res.send("Sayonara Onii chan");
 });
 
 const PORT = process.env.PORT || 4000;
 
-//	room to store player details
 const rooms = {};
 
-// Generate random Room ID
 const generateRoomID = () => {
 	const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 	return Array.from(
@@ -68,24 +67,21 @@ const getUniqueWord = () => {
 		randomWord = wordsList[Math.floor(Math.random() * wordsList.length)];
 	}
 
-	// Add the word to usedWords and remove it from wordsList
 	usedWords.add(randomWord);
 	wordsList = wordsList.filter((word) => word !== randomWord);
 
 	return randomWord;
 };
 
-// Socketoi connection
 io.on("connection", (socket) => {
 	console.log("A user connected:", socket.id);
 
-	// Handle room creation
 	socket.on("createRoom", ({ playerInfo }, callback) => {
 		const roomId = generateRoomID();
 		console.log(`Generated Room ID is: ${roomId}`);
 
 		rooms[roomId] = {
-			players: [{ id: socket.id, name: playerInfo.name, ready: false }],
+			players: [{ id: socket.id, name: playerInfo.name, score: 0, ready: false, stats: {} }],
 			readyCount: 0,
 		};
 
@@ -94,7 +90,6 @@ io.on("connection", (socket) => {
 		console.log(`Room ${roomId} created by ${playerInfo.name}`);
 	});
 
-	// Handle joining a room
 	socket.on("joinRoom", ({ roomId, username }, callback) => {
 		const room = rooms[roomId];
 		if (room) {
@@ -112,7 +107,9 @@ io.on("connection", (socket) => {
 				room.players.push({
 					id: socket.id,
 					name: username,
+					score: 0,
 					ready: false,
+					stats: {} // Initialize player stats
 				});
 			}
 
@@ -125,7 +122,6 @@ io.on("connection", (socket) => {
 		}
 	});
 
-	// Handle when a player marks as ready
 	socket.on("playerReady", ({ roomId, playerName }) => {
 		const room = rooms[roomId];
 		if (room) {
@@ -144,7 +140,6 @@ io.on("connection", (socket) => {
 		}
 	});
 
-	// Handle leaving the room
 	socket.on("leaveRoom", ({ roomId, username }) => {
 		const room = rooms[roomId];
 		if (room) {
@@ -166,28 +161,20 @@ io.on("connection", (socket) => {
 		const room = rooms[roomId];
 
 		if (room) {
-			console.log(`Before removal: ${JSON.stringify(room.players)}`);
-
 			room.players = room.players.filter(
-				(player) => player.username !== username
+				(player) => player.name !== username
 			);
-
-			console.log(`After removal: ${JSON.stringify(room.players)}`);
 
 			io.to(roomId).emit("quitUpdate", {
 				playerList: room.players,
 			});
 
 			if (room.players.length === 0) {
-				console.log(`Deleting empty room: ${roomId}`);
-				delete rooms[roomId]; 
+				delete rooms[roomId];
 			}
-		} else {
-			console.log(`Room ${roomId} not found.`);
 		}
 	});
 
-	// Handle player disconnection
 	socket.on("disconnect", async () => {
 		console.log("User disconnected:", socket.id);
 
@@ -207,7 +194,6 @@ io.on("connection", (socket) => {
 		}
 	});
 
-	// Handle game start
 	socket.on("gamestart", async ({ roomId }) => {
 		console.log(`Game started in room ${roomId}`);
 
@@ -218,7 +204,7 @@ io.on("connection", (socket) => {
 			return;
 		}
 		if (room.gameStarted) {
-			return; 
+			return;
 		}
 
 		if (wordsList.length < 200) {
@@ -228,26 +214,9 @@ io.on("connection", (socket) => {
 		console.log("Words fetched and ready:", wordsList.length);
 
 		io.to(roomId).emit("sendWords", { words: wordsList });
-
-		// Timer setup
-		// let timerDuration = 60;
-		// room.gameStarted = true;
-		// room.timerRunning = true;
-		// io.to(roomId).emit("updateTimer", { timer: timerDuration });
-
-		// const timerInterval = setInterval(() => {
-		// 	timerDuration -= 1;
-		// 	io.to(roomId).emit("updateTimer", { timer: timerDuration });
-
-		// 	if (timerDuration <= 0) {
-		// 		clearInterval(timerInterval);
-		// 		room.timerRunning = false;
-		// 		io.to(roomId).emit("timerEnd");
-		// 	}
-		// }, 1000);
+		room.gameStarted = true;
 	});
 
-	// Handle word requests
 	socket.on("requestWord", () => {
 		const uniqueWord = getUniqueWord();
 		if (uniqueWord) {
@@ -257,19 +226,51 @@ io.on("connection", (socket) => {
 		}
 	});
 
-	// player list for leaderboard
 	socket.on("requestPlayerList", ({ roomId }) => {
 		const room = rooms[roomId];
 		if (room) {
 			const playerList = room.players.map((player) => ({
 				name: player.name,
-				score: player.score || 0, // Default score to 0 if not set
+				score: player.score || 0,
 			}));
 			io.to(roomId).emit("updatePlayerList", { playerList });
-			io.to(roomId).emit("quitUpdate", { playerList });
-
 		}
 	});
+
+	socket.on('updateScore', ({ roomId, score }) => {
+		const room = rooms[roomId];
+		if (room) {
+			const player = room.players.find(p => p.id === socket.id);
+			if (player) {
+				player.score = score;
+				io.to(roomId).emit('updatePlayerList', { playerList: room.players });
+			}
+		}
+	});
+
+	// socket.on('submitStats', ({ roomId, stats }) => {
+	// 	const room = rooms[roomId];
+	// 	if (room) {
+	// 		const player = room.players.find(p => p.id === socket.id);
+	// 		if (player) {
+	// 			player.stats = stats;
+	// 			io.to(roomId).emit('updatePlayerList', { playerList: room.players });
+	// 		}
+	// 	}
+	// });
+
+	socket.on('endGame', ({ roomId }) => {
+		const room = rooms[roomId];
+		if (room) {
+			const sortedPlayers = room.players.sort((a, b) => b.score - a.score);
+			io.to(roomId).emit('gameEnded', {
+				leaderboardData: sortedPlayers,
+			});
+		}
+	});
+
+
+
 });
 
 server.listen(PORT, () => {

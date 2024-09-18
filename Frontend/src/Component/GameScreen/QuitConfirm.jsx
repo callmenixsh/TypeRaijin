@@ -16,13 +16,13 @@ const QuitConfirm = () => {
     };
 
     const onCancel = () => {
-        navigate(`/${roomId}`);
+        navigate(`/game/${roomId}`);
     };
 
     const handleQuitGame = () => {
         console.log(`Sending quitGame with roomId: ${roomId}, username: ${username}`);
         socket.emit('quitGame', { roomId, username });
-        
+
         navigate('/');
     };
 

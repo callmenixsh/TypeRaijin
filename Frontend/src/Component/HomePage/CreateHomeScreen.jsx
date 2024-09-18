@@ -26,6 +26,7 @@ export const CreateHomeScreen = () => {
 		}
 	}, []);
 
+
 	// console.log(roomId);
 	return (
 		<>
@@ -47,12 +48,12 @@ export const CreateHomeScreen = () => {
 					</div>
 				</div>
 
-				<Settings
+				{/* <Settings
 					selectedTime={selectedTime}
 					selectedDiff={selectedDiff}
 					setSelectedDiff={setSelectedDiff}
 					setSelectedTime={setSelectedTime}
-				/>
+				/> */}
 
 			</div>
 		</>

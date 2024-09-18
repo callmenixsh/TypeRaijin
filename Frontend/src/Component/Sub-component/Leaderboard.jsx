@@ -5,39 +5,42 @@ const Leaderboard = ({ roomId }) => {
 	const [players, setPlayers] = useState([]);
 
 	useEffect(() => {
-		// console.log(roomId);
 		if (!roomId) return;
-		socket.emit("requestPlayerList", { roomId });
-		socket.on("updatePlayerList", ({ playerList }) => {
-			setPlayers(playerList);
-		});
 
-		socket.on("quitUpdate", ({ playerList }) => {
+		const handleUpdatePlayerList = ({ playerList }) => {
+			setPlayers(playerList);
+		};
+
+		const handleQuitUpdate = ({ playerList }) => {
 			setPlayers(playerList);
 			console.log("Received quitUpdate:", playerList);
-		});
+		};
+
+		socket.emit("requestPlayerList", { roomId });
+		socket.on("updatePlayerList", handleUpdatePlayerList);
+		socket.on("quitUpdate", handleQuitUpdate);
 
 		return () => {
-			socket.off("updatePlayerList");
-			socket.off("quitUpdate");
+			socket.off("updatePlayerList", handleUpdatePlayerList);
+			socket.off("quitUpdate", handleQuitUpdate);
 		};
 	}, [roomId]);
 
-	return (
-		<>
-			<div className="leaderBoard">
-				<div className="leaderLabel">LEADERBOARD</div>
+	const sortedPlayers = [...players].sort((a, b) => b.score - a.score);
 
-				<div className="playerList">
-					{players.map((player, index) => (
-						<div className={`player${index + 1} playerS`} key={index}>
-							<div className="playerName">{player.name}</div>
-							<div className="score">{player.score}</div>
-						</div>
-					))}
-				</div>
+	return (
+		<div className="leaderBoard">
+			<div className="leaderLabel">LEADERBOARD</div>
+			<div className="playerList">
+				{sortedPlayers.map((player, index) => (
+					<div className={`player${index + 1} playerS`} key={player.id}>
+						<div className="rank">{index + 1}</div>
+						<div className="playerName">{player.name}</div>
+						<div className="score">{player.score} pts</div>
+					</div>
+				))}
 			</div>
-		</>
+		</div>
 	);
 };
 

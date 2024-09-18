@@ -26,6 +26,7 @@ const WaitingScreen = () => {
         }
     }, []);
 
+
     // Join room and listen for updates
     // useEffect(() => {
     if (username && roomId && !joined) {
@@ -49,7 +50,7 @@ const WaitingScreen = () => {
 
         // Listen for game start signal
         socket.on('gameStarted', () => {
-            navigate(`/${roomId}`, {
+            navigate(`/game/${roomId}`, {
                 state: {
                     roomId: roomId,
                     initialTime: location.state.initialTime,
@@ -85,6 +86,9 @@ const WaitingScreen = () => {
         setReadyStatus(true);
         socket.emit('playerReady', { roomId, playerName: username });
     };
+
+
+
 
     return (
         <div className="Wait-Body">

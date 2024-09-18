@@ -4,9 +4,9 @@ import socket from "../../socket";
 
 const WordPanel = ({ showCountdown, onUpdateWords, currentInput, focusedWord, gameDifficulty, roomID, setCurrentInput, setFocusedWord }) => {
     const [words, setWords] = useState([]);
-    const [highlightedWord, setHighlightedWord] = useState(null); 
+    const [highlightedWord, setHighlightedWord] = useState(null);
     const lastYPos = useRef(null);
-    const wordsList = useRef([]); 
+    const wordsList = useRef([]);
     const wordIndex = useRef(0);
 
     useEffect(() => {
@@ -57,7 +57,7 @@ const WordPanel = ({ showCountdown, onUpdateWords, currentInput, focusedWord, ga
                         text: nextWord,
                         id: Date.now(),
                         yPos: randomY,
-                        xPos: 100, 
+                        xPos: 100,
                         visible: true,
                     },
                 ]);
@@ -66,7 +66,6 @@ const WordPanel = ({ showCountdown, onUpdateWords, currentInput, focusedWord, ga
             return () => clearInterval(wordInterval);
         }
     }, [showCountdown, gameDifficulty]);
-
 
     useEffect(() => {
         if (showCountdown) return;
@@ -78,8 +77,8 @@ const WordPanel = ({ showCountdown, onUpdateWords, currentInput, focusedWord, ga
                 prevWords.map((word) => ({
                     ...word,
                     xPos: word.xPos - 0.1899,
-                    visible: word.xPos > 0, 
-                })).filter((word) => word.visible) 
+                    visible: word.xPos > 0,
+                })).filter((word) => word.visible)
             );
 
             animationFrameId = requestAnimationFrame(moveWords);
@@ -87,7 +86,7 @@ const WordPanel = ({ showCountdown, onUpdateWords, currentInput, focusedWord, ga
 
         animationFrameId = requestAnimationFrame(moveWords);
 
-        return () => cancelAnimationFrame(animationFrameId); 
+        return () => cancelAnimationFrame(animationFrameId);
     }, [words, showCountdown]);
 
     useEffect(() => {
@@ -108,13 +107,12 @@ const WordPanel = ({ showCountdown, onUpdateWords, currentInput, focusedWord, ga
     useEffect(() => {
         if (focusedWord && currentInput === focusedWord.text) {
             setWords((prevWords) =>
-                prevWords.filter((word) => word.id !== focusedWord.id) 
+                prevWords.filter((word) => word.id !== focusedWord.id) // Remove word from state after it's typed
             );
             setFocusedWord(null);
             setCurrentInput('');
         }
     }, [currentInput, focusedWord, setCurrentInput, setFocusedWord]);
-
 
     const NUM_Y_POSITIONS = 6;
     const yPositions = Array.from({ length: NUM_Y_POSITIONS }, (_, i) => (i + 1) * (80 / NUM_Y_POSITIONS - 2));
@@ -125,12 +123,12 @@ const WordPanel = ({ showCountdown, onUpdateWords, currentInput, focusedWord, ga
             newYPos = yPositions[Math.floor(Math.random() * yPositions.length)];
         } while (newYPos === lastYPos.current);
 
-        lastYPos.current = newYPos; 
+        lastYPos.current = newYPos;
         return newYPos;
     };
 
     const getNextWord = () => {
-        if (wordIndex.current >= wordsList.current.length) return null; 
+        if (wordIndex.current >= wordsList.current.length) return null;
         const nextWord = wordsList.current[wordIndex.current];
         wordIndex.current += 1;
         return nextWord;
@@ -139,32 +137,34 @@ const WordPanel = ({ showCountdown, onUpdateWords, currentInput, focusedWord, ga
     return (
         <div className="wordPanel">
             {words.map((w) => (
-                <div
-                    key={w.id}
-                    className={`word ${!w.visible ? "invisible" : ""}`}
-                    style={{ top: `${w.yPos}%`, left: `${w.xPos}%` }}
-                >
-                    <p>
-                        {w.text.split("").map((char, index) => {
-                            const isCharTyped = focusedWord && focusedWord.id === w.id && index < currentInput.length;
-                            const isCharMatch = isCharTyped && char === currentInput[index];
-                            const isLastChar = focusedWord && focusedWord.id === w.id && index === currentInput.length - 1;
-                            const isHighlighted = isCharMatch || (isLastChar && highlightedWord === focusedWord);
+                w.visible && (
+                    <div
+                        key={w.id}
+                        className={`word ${!w.visible ? "invisible" : ""}`}
+                        style={{ top: `${w.yPos}%`, left: `${w.xPos}%` }}
+                    >
+                        <p>
+                            {w.text.split("").map((char, index) => {
+                                const isCharTyped = focusedWord && focusedWord.id === w.id && index < currentInput.length;
+                                const isCharMatch = isCharTyped && char === currentInput[index];
+                                const isLastChar = focusedWord && focusedWord.id === w.id && index === currentInput.length - 1;
+                                const isHighlighted = isCharMatch || (isLastChar && highlightedWord === focusedWord);
 
-                            return (
-                                <span
-                                    key={index}
-                                    style={{
-                                        color: isHighlighted ? "green" : "black",
-                                        fontWeight: isHighlighted ? "bold" : "600",
-                                    }}
-                                >
-                                    {char}
-                                </span>
-                            );
-                        })}
-                    </p>
-                </div>
+                                return (
+                                    <span
+                                        key={index}
+                                        style={{
+                                            color: isHighlighted ? "green" : "black",
+                                            fontWeight: isHighlighted ? "bold" : "600",
+                                        }}
+                                    >
+                                        {char}
+                                    </span>
+                                );
+                            })}
+                        </p>
+                    </div>
+                )
             ))}
         </div>
     );
