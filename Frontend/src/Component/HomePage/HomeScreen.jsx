@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./HomeScreen.css";
+import "../animate.css";
 import socket from "../../socket";
 // import RoomID from "./RoomID";
 
@@ -69,7 +70,19 @@ export const HomeScreen = () => {
 
   return (
     <div className="homebody">
-      <div className="GameTitle">TYPERAIJIN</div>
+<div className="GameTitle cssanimation leBeat ">
+  <span>T</span>
+  <span>Y</span>
+  <span>P</span>
+  <span>E</span>
+  <span>R</span>
+  <span>A</span>
+  <span>I</span>
+  <span>J</span>
+  <span>I</span>
+  <span>N</span>
+</div>
+
       <div className="gameStart">
         <div className="UserID">
           <div className="LabelUsername">Enter Username</div>

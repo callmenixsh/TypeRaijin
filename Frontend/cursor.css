@@ -1,0 +1,11 @@
+  .trail-letter {
+    position: absolute;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    color: #3d3d3d; /* Color of the letters */
+    opacity: 1;
+    pointer-events: none;
+    transition: opacity 1s ease-out, transform 1s ease-out;
+    will-change: transform, opacity;
+  }
+  

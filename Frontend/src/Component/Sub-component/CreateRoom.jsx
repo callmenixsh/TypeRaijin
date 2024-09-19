@@ -13,6 +13,8 @@ const CreateRoom = ({ initialTime, setDifficulty }) => {
 
     const handleCreateClick = () => {
 
+        
+
         navigate(`/${roomId}/in-queue`, {
             state: {
                 initialTime,
