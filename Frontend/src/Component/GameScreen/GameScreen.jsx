@@ -6,7 +6,7 @@ import Leaderboard from "../Sub-component/Leaderboard";
 import CountdownOverlay from "./CountdownOverlay";
 import WordPanel from "./WordPanel";
 import logoIcon from "../../assets/logo.png";
-import socket from "../../socket"; // Make sure to import socket
+import socket from "../../socket";
 
 const GameScreen = () => {
     const location = useLocation();
@@ -21,7 +21,7 @@ const GameScreen = () => {
     const [currentInput, setCurrentInput] = useState("");
     const [currentWords, setCurrentWords] = useState([]);
     const [focusedWord, setFocusedWord] = useState(null);
-    const [score, setScore] = useState(0); // Track score for the player
+    const [score, setScore] = useState(0); 
     const navigate = useNavigate();
 
     const inputRef = useRef(null);
@@ -53,16 +53,14 @@ const GameScreen = () => {
 
             if (inputValue === matchingWord.text) {
                 setCurrentWords(
-                    (prevWords) => prevWords.filter((word) => word.id !== matchingWord.id) // Remove word from state after it's typed
+                    (prevWords) => prevWords.filter((word) => word.id !== matchingWord.id)
                 );
                 setFocusedWord(null);
                 setCurrentInput("");
 
-                // Increment score based on word length
                 const newScore = score + matchingWord.text.length;
                 setScore(newScore);
 
-                // Emit score update to the server
                 socket.emit("updateScore", { roomId: roomID, score: newScore });
             }
         }

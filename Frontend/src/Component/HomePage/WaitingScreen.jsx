@@ -18,7 +18,6 @@ const WaitingScreen = () => {
     const [readyStatus, setReadyStatus] = useState(false);
     const [joined, setJoined] = useState(false);
 
-    // Load username from localStorage
     useEffect(() => {
         const storedUsername = localStorage.getItem("username");
         if (storedUsername) {
@@ -27,10 +26,8 @@ const WaitingScreen = () => {
     }, []);
 
 
-    // Join room and listen for updates
     // useEffect(() => {
     if (username && roomId && !joined) {
-        // Emit event to join room
         socket.emit('joinRoom', { roomId, username }, (response) => {
             if (response.success) {
                 setPlayers(response.players);
@@ -38,17 +35,14 @@ const WaitingScreen = () => {
             }
         });
 
-        // Listen for other players joining
         socket.on('playerJoined', (data) => {
             setPlayers(data.players);
         });
 
-        // Listen for updates when a player marks ready
         socket.on('playerReadyStatus', (data) => {
             setPlayers(data.players);
         });
 
-        // Listen for game start signal
         socket.on('gameStarted', () => {
             navigate(`/game/${roomId}`, {
                 state: {
@@ -67,21 +61,18 @@ const WaitingScreen = () => {
     }
     // }, [username, roomId, joined, navigate, location.state]);
 
-    // Handle leaving the room
     const handleLeaveRoom = () => {
         // if (roomId && username) {
-        // Emit event to leave the room
 
         socket.emit('leaveRoom', { roomId, username });
 
-        navigate(-1); // Go back to the previous page
+        navigate(-1); 
         // }
         socket.on('playerJoined', (data) => {
             setPlayers(data.players);
         });
     };
 
-    // Handle ready status
     const handleReady = () => {
         setReadyStatus(true);
         socket.emit('playerReady', { roomId, playerName: username });

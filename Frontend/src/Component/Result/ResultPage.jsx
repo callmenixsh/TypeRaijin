@@ -56,7 +56,6 @@ const ResultPage = () => {
     }
   }, [navigate]);
 
-  // Extract player stats
   // const totalScore = totalScore || 0;
   // const typingSpeed = totalScore / 7 || 0;
 

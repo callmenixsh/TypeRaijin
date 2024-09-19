@@ -109,7 +109,7 @@ io.on("connection", (socket) => {
 					name: username,
 					score: 0,
 					ready: false,
-					stats: {} // Initialize player stats
+					stats: {}
 				});
 			}
 

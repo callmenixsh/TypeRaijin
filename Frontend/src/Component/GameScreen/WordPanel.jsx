@@ -107,7 +107,7 @@ const WordPanel = ({ showCountdown, onUpdateWords, currentInput, focusedWord, ga
     useEffect(() => {
         if (focusedWord && currentInput === focusedWord.text) {
             setWords((prevWords) =>
-                prevWords.filter((word) => word.id !== focusedWord.id) // Remove word from state after it's typed
+                prevWords.filter((word) => word.id !== focusedWord.id)
             );
             setFocusedWord(null);
             setCurrentInput('');
