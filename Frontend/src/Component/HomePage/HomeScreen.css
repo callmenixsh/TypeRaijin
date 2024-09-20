@@ -247,6 +247,14 @@ body {
     transition: transform 0.2s ease, filter .01s;
 }
 
+.credits{
+    position: fixed;
+    bottom: 10px
+}
 
-/* //animations now */
-
+.credits a{
+    all: unset;
+    cursor: pointer;
+    font-weight: bold;
+    color: rgb(39, 136, 120);
+}

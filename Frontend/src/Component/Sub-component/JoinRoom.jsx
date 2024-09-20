@@ -20,7 +20,7 @@ const JoinRoom = ({ initialTime, setDifficulty }) => {
 
 
     return (
-        <button className="Play" onClick={handleJoinClick} style={{ fontSize: '3vh' }}>
+        <button className="Play" onClick={handleJoinClick}>
             JOIN
         </button>
     );

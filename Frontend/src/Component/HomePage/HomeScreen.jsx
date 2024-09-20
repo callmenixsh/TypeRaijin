@@ -4,11 +4,41 @@ import "./HomeScreen.css";
 import "../animate.css";
 import socket from "../../socket";
 import { motion } from "framer-motion";
-import "../animate";
+import "../../../cursor";
 // import * as motion from "framer-motion/client"
 // import RoomID from "./RoomID";
 
+
+
 export const HomeScreen = () => {
+
+
+	function getRandomLetter() {
+		const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789' +
+		'!@#$%^&*()-_=+[]{}|;:",.<>?~`' + 
+			'αδεθικλνοπστυω'  
+			'ΔΘΛΞΠΣΦΨΩ'      
+		return chars[Math.floor(Math.random() * chars.length)];
+	  }
+	  
+	  const words = document.querySelectorAll('.glitch-letter');
+	  
+	  words.forEach(letter => {
+		let originalText = letter.innerText;
+		let interval;
+	  
+		letter.addEventListener('mouseenter', () => {
+		  interval = setInterval(() => {
+			letter.innerText = getRandomLetter();
+		  }, 50);
+		});
+	  
+		letter.addEventListener('mouseleave', () => {
+		  clearInterval(interval);
+		  letter.innerText = originalText; 
+		});
+	  });
+	  
 	const navigate = useNavigate();
 	const [username, setUsername] = useState("");
 	const [copyID, setCopyid] = useState("");
@@ -132,6 +162,7 @@ export const HomeScreen = () => {
 					</motion.div>
 				</motion.div>
 			</motion.div>
+			<div className="credits">Crafted by <a href="https://github.com/Insanekun">Insanekun</a> & <a href="https://github.com/callmenixsh">callmenixsh</a></div>
 		</div>
 	);
 };

@@ -32,7 +32,7 @@ const CreateRoom = ({ initialTime, setDifficulty, motionProps, whileTap }) => {
         <motion.button
             {...motionProps}
             whileTap={whileTap}
-            className="Play" onClick={handleCreateClick} style={{ fontSize: '3vh' }}>
+            className="Play" onClick={handleCreateClick} >
             CREATE
         </motion.button >
     );

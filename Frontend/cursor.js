@@ -22,7 +22,3 @@ function createTrailLetter(x, y) {
     }, 500);
   }, 0);
 }
-
-function getRandomLetter() {
-  return letters.charAt(Math.floor(Math.random() * letters.length));
-}
