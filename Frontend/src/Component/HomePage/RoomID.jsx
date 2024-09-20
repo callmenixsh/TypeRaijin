@@ -1,8 +1,10 @@
 import React from 'react';
 import copyIcon from '../../assets/copy.png';
 import './HomeScreen.css';
+import { motion } from 'framer-motion';
 
-const RoomID = ({ roomID }) => {
+
+const RoomID = ({ roomID, motionProps }) => {
 
 
   const handleCopyID = () => {
@@ -11,7 +13,8 @@ const RoomID = ({ roomID }) => {
   };
 
   return (
-    <div className="createID">
+    <motion.div className="createID"
+      {...motionProps}>
       <div className="idLabel">Room ID:</div>
       <div className="generatedGameID">{roomID}</div>
       <img
@@ -20,7 +23,7 @@ const RoomID = ({ roomID }) => {
         alt="Copy Tag"
         onClick={handleCopyID}
       />
-    </div>
+    </motion.div>
   );
 };
 

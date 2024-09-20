@@ -21,7 +21,7 @@ const GameScreen = () => {
     const [currentInput, setCurrentInput] = useState("");
     const [currentWords, setCurrentWords] = useState([]);
     const [focusedWord, setFocusedWord] = useState(null);
-    const [score, setScore] = useState(0); 
+    const [score, setScore] = useState(0);
     const navigate = useNavigate();
 
     const inputRef = useRef(null);
@@ -180,7 +180,7 @@ const GameScreen = () => {
                 ref={inputRef}
                 className="typingPanel"
                 spellCheck="false"
-                maxLength="10"
+                maxLength="11"
                 value={currentInput}
                 onChange={handleInputChange}
             />

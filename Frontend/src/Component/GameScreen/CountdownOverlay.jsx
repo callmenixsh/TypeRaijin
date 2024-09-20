@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import './GameScreen.css';
 
 const CountdownOverlay = ({ onComplete }) => {
@@ -15,9 +16,16 @@ const CountdownOverlay = ({ onComplete }) => {
 
     return (
         <div className="countdown-overlay">
-            <div className="countdown-text">
+            <motion.div
+                className="countdown-text"
+                key={countdown} // Add key to trigger re-animation
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 10 }}
+            >
                 {countdown > 0 ? countdown : 'Type!'}
-            </div>
+            </motion.div>
         </div>
     );
 };

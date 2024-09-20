@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./WordPanel.css";
 import socket from "../../socket";
+import { motion } from "framer-motion";
 
 const WordPanel = ({ showCountdown, onUpdateWords, currentInput, focusedWord, gameDifficulty, roomID, setCurrentInput, setFocusedWord }) => {
     const [words, setWords] = useState([]);
-    const [highlightedWord, setHighlightedWord] = useState(null);
     const lastYPos = useRef(null);
     const wordsList = useRef([]);
     const wordIndex = useRef(0);
@@ -17,29 +17,13 @@ const WordPanel = ({ showCountdown, onUpdateWords, currentInput, focusedWord, ga
 
     useEffect(() => {
         const handleSendWords = ({ words }) => {
-            console.log("Words received:", words);
-            wordsList.current = words;
+            wordsList.current = words.map(word => word + ' '); // Append a space to each word
         };
 
         socket.on("sendWords", handleSendWords);
 
         return () => {
             socket.off("sendWords", handleSendWords);
-        };
-    }, []);
-
-    useEffect(() => {
-        socket.on("receiveWord", ({ word }) => {
-            console.log("Received a unique word:", word);
-        });
-
-        socket.on("noMoreWords", () => {
-            console.log("No more unique words available.");
-        });
-
-        return () => {
-            socket.off("receiveWord");
-            socket.off("noMoreWords");
         };
     }, []);
 
@@ -59,6 +43,7 @@ const WordPanel = ({ showCountdown, onUpdateWords, currentInput, focusedWord, ga
                         yPos: randomY,
                         xPos: 100,
                         visible: true,
+                        typedChars: Array(nextWord.length).fill(false), // Track typed characters
                     },
                 ]);
             }, gameDifficulty);
@@ -92,17 +77,6 @@ const WordPanel = ({ showCountdown, onUpdateWords, currentInput, focusedWord, ga
     useEffect(() => {
         onUpdateWords(words);
     }, [words, onUpdateWords]);
-
-    useEffect(() => {
-        if (focusedWord && currentInput === focusedWord.text) {
-            setHighlightedWord(focusedWord);
-            const timer = setTimeout(() => {
-                setHighlightedWord(null);
-            }, 500);
-
-            return () => clearTimeout(timer);
-        }
-    }, [currentInput, focusedWord]);
 
     useEffect(() => {
         if (focusedWord && currentInput === focusedWord.text) {
@@ -147,19 +121,26 @@ const WordPanel = ({ showCountdown, onUpdateWords, currentInput, focusedWord, ga
                             {w.text.split("").map((char, index) => {
                                 const isCharTyped = focusedWord && focusedWord.id === w.id && index < currentInput.length;
                                 const isCharMatch = isCharTyped && char === currentInput[index];
-                                const isLastChar = focusedWord && focusedWord.id === w.id && index === currentInput.length - 1;
-                                const isHighlighted = isCharMatch || (isLastChar && highlightedWord === focusedWord);
+                                const isSpaceTyped = isCharTyped && char === ' ';
+
+                                // Update typedChars state when a character is typed
+                                if (isCharTyped) {
+                                    w.typedChars[index] = true; // Mark the character as typed
+                                }
 
                                 return (
-                                    <span
+                                    <motion.span
                                         key={index}
+                                        initial={{ opacity: 1 }}
+                                        animate={{ opacity: w.typedChars[index] || isSpaceTyped ? 0 : 1 }} // Make space (and typed chars) invisible
+                                        transition={{ duration: 0.3 }}
                                         style={{
-                                            color: isHighlighted ? "green" : "black",
-                                            fontWeight: isHighlighted ? "bold" : "600",
+                                            color: isCharMatch ? "green" : "black",
+                                            fontWeight: isCharMatch ? "bold" : "600",
                                         }}
                                     >
                                         {char}
-                                    </span>
+                                    </motion.span>
                                 );
                             })}
                         </p>

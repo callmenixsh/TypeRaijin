@@ -1,8 +1,10 @@
+import { motion } from 'framer-motion';
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+
 // import socket from '../../socket';
 
-const CreateRoom = ({ initialTime, setDifficulty }) => {
+const CreateRoom = ({ initialTime, setDifficulty, motionProps, whileTap }) => {
 
     const location = useLocation();
     const roomId = location.state?.roomId || 'No Room ID';
@@ -13,22 +15,26 @@ const CreateRoom = ({ initialTime, setDifficulty }) => {
 
     const handleCreateClick = () => {
 
-        
+        setTimeout(() => {
+            navigate(`/${roomId}/in-queue`, {
+                state: {
+                    initialTime,
+                    setDifficulty,
+                    roomId,
+                }
+            });
+        }, 300);
 
-        navigate(`/${roomId}/in-queue`, {
-            state: {
-                initialTime,
-                setDifficulty,
-                roomId,
-            }
-        });
 
     };
 
     return (
-        <button className="Play" onClick={handleCreateClick} style={{ fontSize: '3vh' }}>
+        <motion.button
+            {...motionProps}
+            whileTap={whileTap}
+            className="Play" onClick={handleCreateClick} style={{ fontSize: '3vh' }}>
             CREATE
-        </button >
+        </motion.button >
     );
 };
 

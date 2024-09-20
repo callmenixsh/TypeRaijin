@@ -2,19 +2,26 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Subcomps.css'
 import backIcon from '../../assets/back.png'
+import { motion } from 'framer-motion';
 
-const BackButton = () => {
+
+const BackButton = ({ motionProps, whileTap }) => {
   const navigate = useNavigate();
 
   const handleBack = () => {
-    navigate(-1);
+    setTimeout(() => {
+      navigate(-1);
+    }, 300);
   };
 
   return (<>
-    <div onClick={handleBack}>
+    <motion.div
+      {...motionProps}
+      whileTap={whileTap}
+      onClick={handleBack}>
       <img src={backIcon} className='prevPageButton' alt="Back Icon" />
 
-    </div>
+    </motion.div>
   </>
   );
 };

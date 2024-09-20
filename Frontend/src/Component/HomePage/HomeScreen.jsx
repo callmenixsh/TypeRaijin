@@ -3,12 +3,14 @@ import { useNavigate } from "react-router-dom";
 import "./HomeScreen.css";
 import "../animate.css";
 import socket from "../../socket";
+import { motion } from "framer-motion";
+// import * as motion from "framer-motion/client"
 // import RoomID from "./RoomID";
 
 export const HomeScreen = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
-  const [copyID, setCopyid] = useState(''); 
+  const [copyID, setCopyid] = useState('');
 
   const generateRandomUsername = () => {
     const randomNumber = Math.floor(1000 + Math.random() * 9000);
@@ -52,10 +54,11 @@ export const HomeScreen = () => {
 
           setCopyid(response.roomId);
           console.log(copyID);
-
-          navigate(`/creategame/${response.roomId}`, {
-            state: { username, roomId: response.roomId },
-          });
+          setTimeout(() => {
+            navigate(`/creategame/${response.roomId}`, {
+              state: { username, roomId: response.roomId },
+            });
+          }, 200);
         } else {
           console.error("Failed to create room");
         }
@@ -65,26 +68,32 @@ export const HomeScreen = () => {
 
   const onJoinGameClick = () => {
     console.log("Username:", username);
-    navigate("/joingame", { state: { username } });
+    setTimeout(() => {
+      navigate("/joingame", { state: { username } });
+    }, 200);
   };
 
   return (
     <div className="homebody">
-<div className="GameTitle cssanimation leBeat ">
-  <span>T</span>
-  <span>Y</span>
-  <span>P</span>
-  <span>E</span>
-  <span>R</span>
-  <span>A</span>
-  <span>I</span>
-  <span>J</span>
-  <span>I</span>
-  <span>N</span>
-</div>
+      <div className="GameTitle cssanimation lePeak ">
+        <span>T</span>
+        <span>Y</span>
+        <span>P</span>
+        <span>E</span>
+        <span>R</span>
+        <span>A</span>
+        <span>I</span>
+        <span>J</span>
+        <span>I</span>
+        <span>N</span>
+      </div>
 
-      <div className="gameStart">
-        <div className="UserID">
+      <motion.div className="gameStart">
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+          className="UserID">
           <div className="LabelUsername">Enter Username</div>
           <input
             type="text"
@@ -92,18 +101,30 @@ export const HomeScreen = () => {
             onChange={handleUsernameChange}
             required
           />
-        </div>
+        </motion.div>
 
-        <div className="IdFetch">
-          <div className="createGame" onClick={onCreateGameClick}>
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 20, delay: 0.1 }}
+          className="IdFetch">
+          <motion.div
+            className="createGame"
+            onClick={onCreateGameClick}
+            whileTap={{ scale: 0.9 }}
+          >
             CREATE ROOM
-          </div>
-          <div className="joinGame" onClick={onJoinGameClick}>
+          </motion.div>
+          <motion.div
+            className="joinGame"
+            onClick={onJoinGameClick}
+            whileTap={{ scale: 0.9 }}
+          >
             JOIN ROOM
-          </div>
-        </div>
-      </div>
-    </div>
+          </motion.div>
+        </motion.div>
+      </motion.div>
+    </div >
   );
 };
 
