@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import RoomID from './RoomID';
-import './Homescreen.css';
+import './HomeScreen.css';
 import '../Sub-component/Subcomps.css';
 // import BackButton from '../Sub-component/BackButton.jsx';
 import socket from "../../socket";
