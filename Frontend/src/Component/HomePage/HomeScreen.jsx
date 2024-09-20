@@ -4,7 +4,6 @@ import "./HomeScreen.css";
 import "../animate.css";
 import socket from "../../socket";
 import { motion } from "framer-motion";
-import "../../../cursor";
 // import * as motion from "framer-motion/client"
 // import RoomID from "./RoomID";
 
