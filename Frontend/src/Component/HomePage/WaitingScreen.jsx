@@ -104,7 +104,7 @@ const WaitingScreen = () => {
                             animate={{ x: 0, opacity: 1 }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
                         >
-                            {player.name} {player.ready && '✔️'}
+                            {player.name} {player.ready && '✔'}
                         </motion.div>
                     ))}
                     {players.length < 4 &&

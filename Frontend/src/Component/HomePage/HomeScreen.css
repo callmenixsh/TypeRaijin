@@ -38,7 +38,7 @@ body {
     font-size: 4em;
     text-align: center;
     border-bottom: 1px solid black;
-    letter-spacing: 0.2em;
+    /* letter-spacing: 0.2em; */
     width: 750px;
 }
 
@@ -246,3 +246,7 @@ body {
     
     transition: transform 0.2s ease, filter .01s;
 }
+
+
+/* //animations now */
+
