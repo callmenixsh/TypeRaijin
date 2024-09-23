@@ -40,6 +40,7 @@ body {
     border-bottom: 1px solid black;
     /* letter-spacing: 0.2em; */
     width: 750px;
+    user-select: none;
 }
 
 .NameTitle {
@@ -51,11 +52,13 @@ body {
     border-bottom: 1px solid black;
     letter-spacing: 4px;
     max-width: 1600px;
+    user-select: none;
 }
 
 .UserID {
     display: flex;
     justify-content: center;
+    user-select: none;
 }
 
 .UserID *{
@@ -118,6 +121,7 @@ body {
     letter-spacing: 0.2em;
     box-shadow: 0px 2px 7px rgba(53, 53, 53, 0.311);
     cursor: pointer;
+    user-select: none;
 }
 
 .createID,

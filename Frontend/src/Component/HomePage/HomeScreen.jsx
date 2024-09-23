@@ -111,7 +111,7 @@ export const HomeScreen = () => {
       animate={{ opacity: 1 }} // Fade in to visible
       transition={{ duration: 1 }} // Adjust duration as needed
     >
-      <div className="GameTitle">
+      <div className="GameTitle" >
         {['T', 'Y', 'P', 'E', 'R', 'A', 'I', 'J', 'I', 'N'].map((letter, i) => (
           <span key={i} className="glitch-letter">{letter}</span>
         ))}
@@ -161,7 +161,7 @@ export const HomeScreen = () => {
 					</motion.div>
 				</motion.div>
 			</motion.div>
-			<div className="credits">Crafted by <a href="https://github.com/Insanekun">Insanekun</a> & <a href="https://github.com/callmenixsh">callmenixsh</a></div>
+			{/* <div className="credits">Crafted by <a href="https://github.com/itslakxsh">itslakxsh</a> & <a href="https://github.com/callmenixsh">callmenixsh</a></div> */}
 		</div>
 	);
 };

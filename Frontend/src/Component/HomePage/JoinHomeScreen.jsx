@@ -87,7 +87,6 @@ export const JoinHomeScreen = () => {
 						}}
 						className="Play"
 						onClick={handleJoinClick}
-						style={{ fontSize: "3vh" }}
 					>
 						JOIN
 					</motion.button>
