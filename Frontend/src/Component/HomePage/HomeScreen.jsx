@@ -4,40 +4,36 @@ import "./HomeScreen.css";
 import "../animate.css";
 import socket from "../../socket";
 import { motion } from "framer-motion";
-// import * as motion from "framer-motion/client"
-// import RoomID from "./RoomID";
-
-
+import Guide from "../Sub-component/guide";
 
 export const HomeScreen = () => {
-
-
 	function getRandomLetter() {
-		const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789' +
-		'!@#$%^&*()-_=+[]{}|;:",.<>?~`' + 
-			'αδεθικλνοπστυω'  
-			'ΔΘΛΞΠΣΦΨΩ'      
+		const chars =
+			"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789" +
+			'!@#$%^&*()-_=+[]{}|;:",.<>?~`' +
+			"αδεθικλνοπστυω";
+		("ΔΘΛΞΠΣΦΨΩ");
 		return chars[Math.floor(Math.random() * chars.length)];
-	  }
-	  
-	  const words = document.querySelectorAll('.glitch-letter');
-	  
-	  words.forEach(letter => {
+	}
+
+	const words = document.querySelectorAll(".glitch-letter");
+
+	words.forEach((letter) => {
 		let originalText = letter.innerText;
 		let interval;
-	  
-		letter.addEventListener('mouseenter', () => {
-		  interval = setInterval(() => {
-			letter.innerText = getRandomLetter();
-		  }, 50);
+
+		letter.addEventListener("mouseenter", () => {
+			interval = setInterval(() => {
+				letter.innerText = getRandomLetter();
+			}, 50);
 		});
-	  
-		letter.addEventListener('mouseleave', () => {
-		  clearInterval(interval);
-		  letter.innerText = originalText; 
+
+		letter.addEventListener("mouseleave", () => {
+			clearInterval(interval);
+			letter.innerText = originalText;
 		});
-	  });
-	  
+	});
+
 	const navigate = useNavigate();
 	const [username, setUsername] = useState("");
 	const [copyID, setCopyid] = useState("");
@@ -105,18 +101,25 @@ export const HomeScreen = () => {
 
 	return (
 		<div className="homebody">
-    <motion.div
-      className="titlecontainer"
-      initial={{ opacity: 0 }} // Start hidden
-      animate={{ opacity: 1 }} // Fade in to visible
-      transition={{ duration: 1 }} // Adjust duration as needed
-    >
-      <div className="GameTitle" >
-        {['T', 'Y', 'P', 'E', 'R', 'A', 'I', 'J', 'I', 'N'].map((letter, i) => (
-          <span key={i} className="glitch-letter">{letter}</span>
-        ))}
-      </div>
-    </motion.div>
+
+			<Guide/>
+
+			<motion.div
+				className="titlecontainer"
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				transition={{ duration: 1 }}
+			>
+				<div className="GameTitle">
+					{["T", "Y", "P", "E", "R", "A", "I", "J", "I", "N"].map(
+						(letter, i) => (
+							<span key={i} className="glitch-letter">
+								{letter}
+							</span>
+						)
+					)}
+				</div>
+			</motion.div>
 
 			<motion.div className="gameStart">
 				<motion.div
@@ -161,7 +164,10 @@ export const HomeScreen = () => {
 					</motion.div>
 				</motion.div>
 			</motion.div>
-			{/* <div className="credits">Crafted by <a href="https://github.com/itslakxsh">itslakxsh</a> & <a href="https://github.com/callmenixsh">callmenixsh</a></div> */}
+			<div className="credits">
+				Crafted by <a href="https://github.com/callmenixsh" target="_blank">callmenixsh</a> &{" "}
+				<a href="https://github.com/laksh-404" target="_blank">laksh-404</a>
+			</div>
 		</div>
 	);
 };

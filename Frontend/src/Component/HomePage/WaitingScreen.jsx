@@ -7,7 +7,7 @@ import '../Sub-component/Subcomps.css';
 import socket from "../../socket";
 import backIcon from '../../assets/back.png'
 import { motion } from 'framer-motion';
-
+import Guide from "../Sub-component/guide";
 
 const WaitingScreen = () => {
     const navigate = useNavigate();
@@ -84,6 +84,7 @@ const WaitingScreen = () => {
 
     return (
         <div className="Wait-Body">
+            <Guide/>
             <div className='waitMsg'>
                 <h1>
                     {Array.from("Waiting for players...").map((char, index) => (
