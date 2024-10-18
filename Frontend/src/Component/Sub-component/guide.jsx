@@ -21,9 +21,10 @@ const Guide = () => {
         <div className="guide-menu">
           <h3>How to play</h3>
           <ul>
-            <li>Type the words as fast as you can.</li>
-            <li>Avoid letting words reach the laser.</li>
-            <li>Compete against others in multiplayer</li>
+            <li>Type the words as fast as you can. </li>
+            <li>Avoid letting words reach the end. </li>
+            <li>Careful with what words you type. </li>
+            <li>Compete against others in multiplayer. </li>
           </ul>
         </div>
       )}

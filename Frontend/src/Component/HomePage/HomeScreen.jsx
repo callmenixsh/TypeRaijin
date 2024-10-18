@@ -166,10 +166,9 @@ export const HomeScreen = () => {
 			</motion.div>
 			<div className="credits">
 				Crafted by <a href="https://github.com/callmenixsh" target="_blank">callmenixsh</a> &{" "}
-				<a href="https://github.com/laksh-404" target="_blank">laksh-404</a>
+				<a href="https://github.com/itslaksh" target="_blank">itslaksh</a>
 			</div>
 		</div>
 	);
 };
-
 export default HomeScreen;
